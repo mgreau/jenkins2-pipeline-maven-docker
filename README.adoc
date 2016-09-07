@@ -1,0 +1,8 @@
+= Talk about Jenkins 2 Pipeline with Docker for Maven CI
+
+This repository contains all resources about this talk:
+
+* +s+: slides
+* +p+: public (assets, html...)
+* +c+: code (samples, pipelines...)
+* +i+: infra (vm, docker...)
