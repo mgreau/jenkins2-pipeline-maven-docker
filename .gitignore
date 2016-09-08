@@ -1,5 +1,8 @@
+# Custom files 
+s/slides/dist
 
-# Created by https://www.gitignore.io/api/osx,linux,windows
+
+
 
 ### OSX ###
 *.DS_Store
