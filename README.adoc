@@ -6,3 +6,14 @@ This repository contains all resources about this talk:
 * +p+: public (assets, html...)
 * +c+: code (samples, pipelines...)
 * +i+: infra (vm, docker...)
+
+
+== How to work on slides?
+
+
+[source]
+.Work on slides with livereload feature
+----
+$ docker-compose -f s/docker-compose.yml up
+$ open http://localhost:8000
+----
