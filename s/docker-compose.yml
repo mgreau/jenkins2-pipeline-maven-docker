@@ -3,8 +3,8 @@ services:
   slides:
     build: ./
     ports:
-      - "8000:8000"
-      - "35729:35729"
+      - "8000"
+      - "35729"
     volumes:
       - ./slides:/documents/slides
     container_name: 'dday'
