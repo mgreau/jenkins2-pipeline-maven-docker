@@ -1,7 +1,7 @@
-= REX:{sp} ioslides Presentation Engine: As Emulated by Bespoke.js
-Maxime Greau Name
-:organization: ACME Inc.
-:position: Job Title
+= Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2
+Maxime Gréau
+:organization: eXo Platform
+:position: Senior Sofwtare Engineer
 :header-opts: slice
 :imagesdir: images
 :sectids!:
@@ -14,6 +14,9 @@ Maxime Greau Name
 * Title capitalization is title case
   - Subtitle capitalization is title case
 * Titles and subtitles should never have a period at the end
+
+// Add content for DevopsDDay
+include::content-fr.adoc[]
 
 == Slide with Bullets that Build: Subtitle Placeholder
 A list where items build:
