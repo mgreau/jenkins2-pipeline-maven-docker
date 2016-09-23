@@ -1,0 +1,12 @@
+version: '2'
+services:
+  jenkins2:
+    image: mgreau/jenkins:2.7.2
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/var/jenkins:/var/jenkins_home
+    privileged: true
+    restart: always  
