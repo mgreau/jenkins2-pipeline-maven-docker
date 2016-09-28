@@ -1,0 +1,41 @@
+// Etats des lieux
+
+[.closing.segue.badge-right]
+== eXo Platform 4
+
+== Platform Components
+
+* More than 15 components to build PLF
+* Lots of Add-ons
+
+== Kind of jobs
+
+* CI jobs (develop, stable, features branches)
+* Sonar jobs
+* Maven Site jobs
+* Translation jobs
+
+== Version and Clients
+
+* Since 2003, severals versions
+* Clients with differents stacks
+* Java 6/7/8
+* Maven 3.0 / 3.2 
+
+== Matrix
+
+[%header%autowidth.spread]
+|===
+ |      |Java  6 / Maven 3.0  |Column 2    |Column 3    |Column 4
+s|eXo Platform 4.0 |placeholder v|placeholder |placeholder |placeholder
+s|Row 2 |placeholder  |placeholder |placeholder |placeholder
+s|Row 3 |placeholder  |placeholder |placeholder |placeholder
+s|Row 4 |placeholder  |placeholder |placeholder |placeholder
+s|Row 5 |placeholder  |placeholder |placeholder |placeholder
+|===
+
+
+== Me when Engineering asked for a FB
+
+
+== 

@@ -1,0 +1,19 @@
+// A propos moi + eXo + SWF
+== About Me 
+* Software Engineer 
+* Book Author
+** Apache Maven 3
+* Speaker
+** Asciidoctor
+
+[.closing.segue.badge-right]
+== eXo Platform
+
+
+
+== Software Factory
+
+* Git (GitHub)
+* Jenkins
+* Sonar
+* Nexus

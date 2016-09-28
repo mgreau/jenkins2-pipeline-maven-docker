@@ -1,0 +1,23 @@
+// Part 3: About new Pipeline Jobs
+[.closing.segue.badge-right]
+== !
+
+Pipeline, DSL and Docker to the rescue!
+
+[.closing.segue.badge-right]
+== Docker Image
+
+* Social Portal
+
+
+== Problems
+
+* Jenkinsfile not secure?
+* 
+
+
+== Plugins to use
+
+
+== Best Practices
+
