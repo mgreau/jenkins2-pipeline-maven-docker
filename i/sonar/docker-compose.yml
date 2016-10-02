@@ -1,0 +1,37 @@
+version: '2'
+networks:
+  swf:
+services:
+  sonar:
+    image: sonarqube:5.6.1-alpine
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql  
+    links:
+      - mysql:db
+    environment:
+      - SONARQUBE_JDBC_USER=root
+      - SONARQUBE_JDBC_PASSWORD=sonar-pwd
+      - SONARQUBE_JDBC_URL=jdbc:mysql://db/sonar?useUnicode=true&characterEncoding=utf8
+    volumes:
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/data:/opt/sonarqube/data
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/extensions:/opt/sonarqube/extensions
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/conf/sonar.properties:/opt/sonarqube/conf/sonar.properties:ro
+    networks:
+      swf:
+    #command : [ "-Dsonar.security.localUsers=admin,sonar" ]
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=sonar-pwd
+      - MYSQL_DATABASE=sonar
+      - MYSQL_USER=sonar
+      - MYSQL_PASSWORD=sonar-pwd
+    volumes:
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql/lib:/var/lib/mysql
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql/log:/var/log/mysql
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql/sonar.cnf:/etc/mysql/conf.d/sonar.cnf:ro
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql_init/:/docker-entrypoint-initdb.d
+    networks:
+      swf:
