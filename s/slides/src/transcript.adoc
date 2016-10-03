@@ -1,0 +1,8 @@
+= transcript
+
+
+== Demo
+
+. Execute sonar job without sonar to show failed and email
+. Start sonar with docker-compose
+. Execute same job to show success
