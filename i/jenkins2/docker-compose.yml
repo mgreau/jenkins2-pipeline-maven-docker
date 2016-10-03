@@ -1,12 +1,20 @@
 version: '2'
+networks:
+  default:
+    external:
+      name: swf
 services:
   jenkins2:
     image: mgreau/jenkins:2.7.2
+    container_name: exo-jenkins2
+    environment: 
+      - JENKINS_OPTS="-Dmail.smtp.starttls.enable='true'"
     ports:
-      - "8080:8080"
-      - "50000:50000"
+      - "8888:8080"
+      - "50001:50000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /Users/mgreau/PBR/talks/DevopsDDay2016/var/jenkins:/var/jenkins_home
+      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/jenkins:/var/jenkins_home
+      - /Users/mgreau/.ssh/id_rsa.pub:/usr/share/jenkins/ref/.ssh/authorized_keys:rw
     privileged: true
-    restart: always  
+    #restart: always  
