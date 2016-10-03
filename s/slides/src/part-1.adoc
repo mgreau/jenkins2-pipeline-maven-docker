@@ -1,5 +1,8 @@
 // A propos moi + eXo + SWF
-== About Me 
+[.closing.segue.badge-right]
+== About me
+
+== Maxime Gréau - @mgreau
 * Software Engineer 
 * Book Author
 ** Apache Maven 3
@@ -10,10 +13,28 @@
 == eXo Platform
 
 
-
 == Software Factory
 
 * Git (GitHub)
 * Jenkins
 * Sonar
 * Nexus
+* JIRA
+
+== Test 
+
+[.text-center]
+--
+[pass,subs=normal]
+I am centered text with a btn:[Button] and [.disabled]#btn:[Disabled]# button.
+--
+
+== Table Option B: Subtitle Placeholder
+[.pivot.spread%autowidth,cols=4]
+|===
+h|Header 1 |placeholder v|placeholder |placeholder
+h|Header 2 |placeholder  |placeholder |placeholder
+h|Header 3 |placeholder  |placeholder |placeholder
+h|Header 4 |placeholder  |placeholder |placeholder
+h|Header 5 |placeholder  |placeholder |placeholder
+|===

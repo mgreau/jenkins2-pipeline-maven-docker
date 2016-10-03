@@ -1,14 +1,12 @@
 // Part 3: About new Pipeline Jobs
 [.closing.segue.badge-right]
-== !
+== Pipeline, DSL and Docker to the rescue!
 
-Pipeline, DSL and Docker to the rescue!
 
-[.closing.segue.badge-right]
-== Docker Image
 
-* Social Portal
+== Docker CI Image
 
+* Create your own CI Docker Image 
 
 == Problems
 
@@ -17,6 +15,23 @@ Pipeline, DSL and Docker to the rescue!
 
 
 == Plugins to use
+
+* Pipeline
+* Docker
+* DSL
+
+== Groovy libs
+
+[source,groovy]
+----
+include::listings/groovy-libs/exoSonar.groovy[lines=20..30]
+----
+
+
+
+[.inverse.subject]
+== !
+DEMO
 
 
 == Best Practices

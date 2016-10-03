@@ -59,7 +59,7 @@ gulp.task('html', ['clean:html'], function() {
   return gulp.src('src/index.adoc')
     .pipe(isDist ? through() : plumber())
     // NOTE using stdin here would cause loss of context
-    .pipe(exec('bundle exec asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true }))
+    .pipe(exec('bundle exec asciidoctor-bespoke -T src/templates -o - src/index.adoc', { pipeStdout: true }))
     .pipe(exec.reporter({ stdout: false }))
     .pipe(through(function(file) {
       var html = tidy(file.contents.toString(), tidyOpts) // NOTE based on tidy 4.9.26
@@ -91,7 +91,7 @@ gulp.task('css', ['clean:css'], function() {
 
 gulp.task('images', ['clean:images'], function() {
   return gulp.src('src/images/**/*')
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('dist/images/'))
     .pipe(connect.reload());
 });
 

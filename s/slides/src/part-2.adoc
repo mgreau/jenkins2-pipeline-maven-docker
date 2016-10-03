@@ -37,5 +37,8 @@ s|Row 5 |placeholder  |placeholder |placeholder |placeholder
 
 == Me when Engineering asked for a FB
 
+image::exo-jenkins-fb.gif[ask for FB,350,role=crux]
 
-== 
+[.credit.light]
+unsplash.com/photos/PKVcQXEcfLU
+

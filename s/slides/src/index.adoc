@@ -8,6 +8,7 @@ Maxime Gréau
 :experimental:
 :source-highlighter: prettify
 
+
 // Part 1: About me and eXo and SWF
 include::part-1.adoc[]
 
@@ -19,13 +20,11 @@ include::part-3.adoc[]
 
 [.closing.segue.badge-right]
 == <Thank You!>
-Important contact information goes here.
 
 [horizontal.contact]
-g+:: plus.google.com/1234567890
-twitter:: @yourhandle
-www:: www.you.com
-github:: github.com/you
+twitter:: @mgreau
+blog:: http://mgreau.com/blog
+github:: github.com/mgreau
 
 [.inverse.subject]
 == !
