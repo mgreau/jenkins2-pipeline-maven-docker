@@ -1,9 +1,12 @@
 version: '2'
 networks:
-  swf:
+  default:
+    external:
+      name: swf
 services:
   sonar:
     image: sonarqube:5.6.1-alpine
+    container_name: exo-sonar
     ports:
       - "9000:9000"
     depends_on:
@@ -18,11 +21,10 @@ services:
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/data:/opt/sonarqube/data
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/extensions:/opt/sonarqube/extensions
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/conf/sonar.properties:/opt/sonarqube/conf/sonar.properties:ro
-    networks:
-      swf:
     #command : [ "-Dsonar.security.localUsers=admin,sonar" ]
   mysql:
     image: mysql:5.7
+    container_name: exo-sonar-db
     environment:
       - MYSQL_ROOT_PASSWORD=sonar-pwd
       - MYSQL_DATABASE=sonar
@@ -33,5 +35,3 @@ services:
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql/log:/var/log/mysql
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql/sonar.cnf:/etc/mysql/conf.d/sonar.cnf:ro
       - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/sonar/mysql_init/:/docker-entrypoint-initdb.d
-    networks:
-      swf:
