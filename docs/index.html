@@ -1,1 +1,383 @@
-<h1>Jenkins/Docker prez</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[REX] Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2</title>
+<meta name="author" content="Maxime Gréau">
+<meta name="generator" content="Asciidoctor 1.5.4 (Bespoke.js converter)">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="build/build.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+</head>
+<body>
+<article class="deck">
+<section class="title" data-title="">
+<h1>[REX] Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2</h1>
+<footer>
+<p class="author"><span class="personname"><span class="firstname">Maxime</span> <span class="surname">Gréau</span></span><span class="affiliation"><span class="position">Senior Sofwtare Engineer</span> <span class="organization">eXo Platform</span></span></p>
+</footer>
+</section>
+<section class="closing segue badge-right">
+<h2>About me, eXo, me@eXo</h2>
+</section>
+<section>
+<h2>Maxime Gréau - @mgreau</h2>
+<div class="columns-2 float-group">
+<ul class="left">
+<li><span class="primary"><strong>Senior Software Engineer</strong></span>
+<ul>
+<li><span class="primary">@ <strong>eXo</strong> since 2015</span></li>
+</ul>
+</li>
+<li><span class="primary">2010-2015 - Architect DGFIP</span></li>
+<li><span class="primary">Before 2010 - Software Developer</span></li>
+<li><span class="primary">Book Author</span>
+<ul>
+<li><span class="primary"><strong>2011</strong>: Apache Maven 3</span></li>
+</ul>
+</li>
+<li><span class="primary">Open Source</span>
+<ul>
+<li><span class="primary">Asciidoctor</span></li>
+</ul>
+</li>
+<li><span class="primary">Speaker</span>
+<ul>
+<li><span class="primary">Devoxx, DevNation, DevFest, JUG&#8230;&#8203;</span></li>
+</ul>
+</li>
+</ul>
+<figure class="image reflect"><img src="images/mgreau-profile.png" alt="@mgreau profile" width="300"></figure>
+</div>
+<ul class="horizontal contact">
+<li><span class="primary"><a href="https://twitter.com/mgreau">@mgreau</a><br></span></li>
+<li><span class="primary"><a href="http://mgreau.com/posts">mgreau.com/blog</a></span></li>
+</ul>
+</section>
+<section>
+<h2>eXo at a glance</h2>
+<figure class="image crux"><img src="images/exo-at-a-glance.png" alt="eXo at a glance" width="900"></figure>
+</section>
+<section>
+<h2>What is eXo Platform?</h2>
+<div class="columns-2 float-group">
+<ul class="left">
+<li><span class="primary">Open Source</span>
+<ul>
+<li><span class="primary"><a href="https://github.com/exoplatform">eXo Platform - GitHub</a></span></li>
+<li><span class="primary"><a href="https://github.com/exo-addons">eXo Add-ons - GitHub</a></span></li>
+</ul>
+</li>
+<li><span class="primary">Enterprise class</span></li>
+<li><span class="primary">Digital Collaboration</span></li>
+<li><span class="primary">Platform</span></li>
+</ul>
+<figure class="image reflect"><img src="images/exo-platform.png" alt="eXo Platform" width="500"></figure>
+</div>
+</section>
+<section>
+<h2>Software Factory Overview</h2>
+<figure class="image crux"><img src="images/exo-swf-base.svg" alt="eXo SWF"></figure>
+</section>
+<section class="closing segue badge-right">
+<h2>What we have to build?</h2>
+</section>
+<section>
+<h2>Platform Components &amp; Add-ons</h2>
+<div class="columns-2 compact float-group">
+<figure class="image left"><img src="images/exo-plf-components.png" alt="eXo PLF Components" width="600"></figure>
+<ul class="left">
+<li><span class="primary">More than <strong>20 components</strong> to build</span>
+<ul>
+<li><span class="primary">Platform projects</span></li>
+<li><span class="primary">GateIn projects</span></li>
+<li><span class="primary">Juzu projects</span></li>
+</ul>
+</li>
+<li><span class="primary">Lots of Add-ons</span>
+<ul>
+<li><span class="primary">15+ supported Add-ons</span></li>
+<li><span class="primary"><strong>100+</strong> community Add-ons</span></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">1 component = 1 <strong>mutli-module</strong> Maven project</td>
+</tr>
+</table>
+</div>
+</section>
+<section>
+<h2>Git Workflow</h2>
+<div class="columns-2 float-group">
+<figure class="image reflect"><img src="images/exo-git-workflow.png" alt="eXo git workflow" width="500"></figure>
+<ul class="left">
+<li><span class="primary"><strong>develop</strong></span></li>
+<li><span class="primary"><strong>stable</strong>:</span>
+<ul>
+<li><span class="primary">stable/1.x stable/4.3.x stable/4.2.x</span></li>
+</ul>
+</li>
+<li><span class="primary"><strong>feature</strong></span>
+<ul>
+<li><span class="primary">feature/&lt;feature-name&gt;</span></li>
+</ul>
+</li>
+<li><span class="primary"><strong>fix</strong></span>
+<ul>
+<li><span class="primary">fix/&lt;issue-id&gt;</span></li>
+</ul>
+</li>
+<li><span class="primary"><strong>integration</strong></span></li>
+<li><span class="primary">&#8230;&#8203;</span></li>
+</ul>
+</div>
+<p class="contact"><a href="http://developer.exoplatform.org" class="bare">http://developer.exoplatform.org</a></p>
+</section>
+<section>
+<h2>Several Job types</h2>
+<ul>
+<li><span class="primary">CI jobs <strong>(&lt;project&gt;-&lt;branch&gt;-ci)</strong></span>
+<ul>
+<li><span class="primary">for all major branches (develop, stable, features)</span></li>
+<li><span class="primary">for some important fix</span></li>
+</ul>
+</li>
+<li><span class="primary">Sonar jobs</span>
+<ul>
+<li><span class="primary">for all develop branches</span></li>
+</ul>
+</li>
+<li><span class="primary">Maven Site jobs</span>
+<ul>
+<li><span class="primary">for all Platform project</span></li>
+</ul>
+</li>
+<li><span class="primary">Translation jobs</span></li>
+</ul>
+</section>
+<section>
+<h2>Version and Clients</h2>
+<ul>
+<li><span class="primary">Since 2003, several versions</span>
+<ul>
+<li><span class="primary">eXo Platform 3.x (3.0 / 3.5)</span></li>
+<li><span class="primary">eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)</span></li>
+</ul>
+</li>
+<li><span class="primary">Each version has its stack (run &amp; build)</span>
+<ul>
+<li><span class="primary">Java 6/7/8</span></li>
+<li><span class="primary">Maven 3.0 / 3.2</span></li>
+</ul>
+</li>
+<li><span class="primary">Clients with several infrastructure</span></li>
+</ul>
+</section>
+<section>
+<h2>Matrix</h2>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col></colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">eXo Platform 4.2</th>
+<th class="tableblock halign-left valign-top">eXo Platform 4.3</th>
+<th class="tableblock halign-left valign-top">eXo Platform 4.4</th>
+<th class="tableblock halign-left valign-top">Add-ons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock"><strong>CI Jobs</strong></p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">* jdk</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock"><strong>Sonar Jobs</strong></p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock"><strong>Doc job</strong></p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock"><strong>Translation</strong></p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock"><strong>Row 5</strong></p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+<td class="tableblock halign-left valign-top">
+<p class="tableblock">placeholder</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2>Remembered how to create a Maven Jenkins Job?</h2>
+<p>todo: add gif</p>
+</section>
+<section>
+<h2>Me when I had to use the Jenkins UI</h2>
+<figure class="image crux"><img src="images/jenkins-clic-hell.gif" alt="jenkins UI" width="350"></figure>
+</section>
+<section class="inverse">
+<figure class="quote tada">
+<blockquote>
+<p>You become to feel like a toaster. <span class="image reflect"><img src="images/toaster.gif" alt="toaster" width="450"></span></p>
+</blockquote>
+<figcaption>Quentin Adam <cite>Clever Cloud</cite></figcaption>
+</figure>
+</section>
+<section class="closing segue badge-bottom">
+<h2>Jenkins DSL and Pipeline jobs with Docker to the rescue!</h2>
+<p><span class="image"><img src="images/jenkins-logo.png" alt="jenkins" width="150"></span> <span class="image"><img src="images/docker-logo.png" alt="docker" width="230"></span></p>
+</section>
+<section>
+<h2>Docker CI Image</h2>
+<ul>
+<li><span class="primary">Create your own CI Docker Image</span></li>
+</ul>
+</section>
+<section>
+<h2>Problems</h2>
+<ul>
+<li><span class="primary">Jenkinsfile not secure?</span></li>
+<li><span class="primary">not yet</span></li>
+</ul>
+</section>
+<section>
+<h2>Plugins to use</h2>
+<ul>
+<li><span class="primary">Pipeline</span></li>
+<li><span class="primary">Docker</span></li>
+<li><span class="primary">DSL</span></li>
+</ul>
+</section>
+<section>
+<h2>Groovy libs</h2>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    def DOCKER_RUN_PARAMS = utils.getValue('dockerRunParams', '', config, env)
+    def JOB_NAME = env.JOB_NAME.replaceAll('/','-')
+
+    // required values
+    def DOCKER_IMAGE = utils.getValue('dockerImage', '', config, env)
+    def GIT_URL = utils.getValue('gitUrl', '', config, env)
+    def GIT_BRANCH = utils.getValue('gitBranch', '', config, env)
+
+    def mailTo = "mgreau@exoplatform.com"
+
+    def eXoJDKMaven = docker.image(DOCKER_IMAGE);</code></pre>
+</section>
+<section class="inverse subject">
+<p>DEMO</p>
+</section>
+<section>
+<h2>Best Practices</h2>
+</section>
+<section>
+<h2>What about local build?</h2>
+</section>
+<section>
+<h2>Resume</h2>
+</section>
+<section class="closing segue badge-right">
+<h2>&lt;Thank You!&gt;</h2>
+<ul>
+<li><span class="primary"><a href="http://mgreau.com/jenkins2-pipeline-maven-docker/"><strong>Slides online</strong></a></span>
+<ul>
+<li><span class="primary">Slides in <strong>AsciiDoc</strong>, feel free to <a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/s/slides/src">send a PR</a> ;)</span></li>
+</ul>
+</li>
+<li><span class="primary"><a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i"><strong>Demo files</strong></a></span>
+<ul>
+<li><span class="primary">Dockerfiles &amp; docker-compose.yml for <strong>Jenkins and Sonar</strong></span></li>
+</ul>
+</li>
+</ul>
+<p class="contact">twitter: <a href="https://twitter.com/mgreau">@mgreau</a> - github: <a href="https://github.com/mgreau">@mgreau</a> - <a href="http://mgreau.com/post">mgreau.com</a></p>
+</section>
+<section class="inverse subject">
+<figure class="image logo crux"><img src="images/exo.png" alt="Google Developers"></figure>
+</section>
+</article>
+<script src="build/build.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+<script>Array.prototype.forEach.call(document.querySelectorAll('i.conum+b'),function(n){n.parentNode.removeChild(n)})</script>
+<script>prettyPrint()</script>
+</body>
+</html>
