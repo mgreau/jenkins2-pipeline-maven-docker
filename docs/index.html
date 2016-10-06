@@ -81,7 +81,7 @@
 <figure class="image crux"><img src="images/exo-swf-base.svg" alt="eXo SWF"></figure>
 </section>
 <section class="closing segue badge-right">
-<h2>What we have to build?</h2>
+<h2>What do we have to build?</h2>
 </section>
 <section>
 <h2>Platform Components &amp; Add-ons</h2>
@@ -109,7 +109,7 @@
 <td class="icon">
 <div class="title">Note</div>
 </td>
-<td class="content">1 component = 1 <strong>mutli-module</strong> Maven project</td>
+<td class="content">1 component = 1 <strong>multi-module</strong> Maven project</td>
 </tr>
 </table>
 </div>
@@ -308,18 +308,64 @@
 <h2>Jenkins DSL and Pipeline jobs with Docker to the rescue!</h2>
 <p><span class="image"><img src="images/jenkins-logo.png" alt="jenkins" width="150"></span> <span class="image"><img src="images/docker-logo.png" alt="docker" width="230"></span></p>
 </section>
-<section>
-<h2>Docker CI Image</h2>
-<ul>
-<li><span class="primary">Create your own CI Docker Image</span></li>
-</ul>
+<section class="inverse subject">
+<h2>1- Create your own CI Docker Images</h2>
 </section>
 <section>
-<h2>Problems</h2>
+<h2>Build stacks</h2>
+<div class="columns-2 float-group">
+<figure class="image left"><img src="images/exo-ci-dockerhub.png" alt="eXo Dckerhub Components" width="500"></figure>
+<ul class="left">
+<li><span class="primary">What we need?</span>
 <ul>
-<li><span class="primary">Jenkinsfile not secure?</span></li>
-<li><span class="primary">not yet</span></li>
+<li><span class="primary">Git</span></li>
+<li><span class="primary">Maven</span></li>
 </ul>
+</li>
+<li><span class="primary"><strong>eXo CI Images</strong></span>
+<ul>
+<li><span class="primary"><strong>exoplatform/ci:jdk6-maven30</strong></span></li>
+<li><span class="primary">exoplatform/ci:jdk7-maven30</span></li>
+<li><span class="primary">exoplatform/ci:jdk7-maven32</span></li>
+<li><span class="primary">exoplatform/ci:jdk8-maven30</span></li>
+<li><span class="primary">exoplatform/ci:jdk8-maven32</span></li>
+<li><span class="primary">puppet</span></li>
+</ul>
+</li>
+</ul>
+</div>
+<p class="contact"><a href="https://github.com/exo-docker/exo-ci" class="bare">https://github.com/exo-docker/exo-ci</a></p>
+</section>
+<section class="compact">
+<h2>What to know about Docker Images for Jenkins?</h2>
+<ul>
+<li><span class="primary">entrypoint</span></li>
+</ul>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Workaround to be able to execute others command than "mvn" as entrypoint
+ENTRYPOINT ["/usr/bin/docker-entrypoint"]
+
+CMD ["mvn", "--help"]</code></pre>
+
+<ul>
+<li><span class="primary">docker-entrypoint.sh</span></li>
+</ul>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Hack for Jenkins Pipeline: authorize cat without absolute path
+if [[ "$1" == "/"* ]] || [[ "$1" == "cat" ]]; then
+  exec "$@"
+fi
+
+exec mvn "$@"</code></pre>
+</section>
+<section class="inverse subject">
+<h2>2- Use Jenkins Pipeline plugin</h2>
+<div class="columns-2 float-group">
+<ul class="left">
+<li><span class="primary">DSL plugins</span></li>
+</ul>
+<ul class="left">
+<li><span class="primary">Pipeline plugins</span></li>
+</ul>
+</div>
 </section>
 <section>
 <h2>Plugins to use</h2>
@@ -344,7 +390,11 @@
     def eXoJDKMaven = docker.image(DOCKER_IMAGE);</code></pre>
 </section>
 <section class="inverse subject">
-<p>DEMO</p>
+<h2>DEMO</h2>
+<p>Use Pipeline for Sonar</p>
+</section>
+<section class="inverse subject">
+<h2>3- Generate your Pipeline jobs with DSL jobs</h2>
 </section>
 <section>
 <h2>Best Practices</h2>
@@ -353,7 +403,7 @@
 <h2>What about local build?</h2>
 </section>
 <section>
-<h2>Resume</h2>
+<h2>To sum up</h2>
 </section>
 <section class="closing segue badge-right">
 <h2>&lt;Thank You!&gt;</h2>
