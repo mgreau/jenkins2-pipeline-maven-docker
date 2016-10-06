@@ -112,7 +112,7 @@ gulp.task('clean:css', function() {
 });
 
 gulp.task('clean:images', function() {
-  return del('dist/images');
+  return del('dist/images/*');
 });
 
 gulp.task('connect', ['build'], function() {
