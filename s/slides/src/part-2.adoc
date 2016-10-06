@@ -1,7 +1,7 @@
 // Etats des lieux
 
 [.closing.segue.badge-right]
-== What we have to build?
+== What do we have to build?
 
 == Platform Components & Add-ons
 [.columns-2.compact.float-group]
@@ -19,7 +19,7 @@ image::exo-plf-components.png[eXo PLF Components,600]
 ** *100+* community Add-ons
 --
 [NOTE] 
-1 component = 1 *mutli-module* Maven project
+1 component = 1 *multi-module* Maven project
 
 == Git Workflow
 [.columns-2.float-group]
