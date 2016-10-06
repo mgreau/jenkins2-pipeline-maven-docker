@@ -18,8 +18,8 @@ include::part-2.adoc[]
 // Part 3: eXo Platform Project and Maven Jobs
 include::part-3.adoc[]
 
-[.closing.segue.badge-right]
-== <Thank You!>
+[.closing]
+== <Thank You!!>
 
 [horizontal.contact]
 twitter:: @mgreau
@@ -29,3 +29,6 @@ github:: github.com/mgreau
 [.inverse.subject]
 == !
 image::google-developers-logo-inverse.svg[Google Developers,422,96,role=logo crux]
+
+// sides examples
+include::backup.adoc[]

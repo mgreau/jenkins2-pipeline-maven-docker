@@ -1,5 +1,16 @@
 = transcript
 
+== Steps
+
+* Create a video about creating a job Maven now
+* show a slides with this job for
+** CI / Sonar / Translation
+** for stable / develop
+** for FB 
+* then slide with someone who click /click / click 
+* then slide with grille pain
+
+
 
 == Demo
 

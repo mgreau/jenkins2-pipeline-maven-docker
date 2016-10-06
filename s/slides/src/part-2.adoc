@@ -1,12 +1,27 @@
 // Etats des lieux
 
 [.closing.segue.badge-right]
-== eXo Platform 4
+== What we have to build?
 
 == Platform Components
 
 * More than 15 components to build PLF
 * Lots of Add-ons
+
+== Git Workflow
+[.columns-2.compact.float-group]
+--
+[.left]
+image::exo-git-workflow.png[eXo SWF,500,role=reflect]
+
+[.left]
+* *develop*
+* stable
+* doc
+
+--
+[horizontal.right]
+http://developer.exoplatform.org
 
 == Kind of jobs
 
@@ -26,17 +41,19 @@
 
 [%header%autowidth.spread]
 |===
- |      |Java  6 / Maven 3.0  |Column 2    |Column 3    |Column 4
-s|eXo Platform 4.0 |placeholder v|placeholder |placeholder |placeholder
-s|Row 2 |placeholder  |placeholder |placeholder |placeholder
-s|Row 3 |placeholder  |placeholder |placeholder |placeholder
-s|Row 4 |placeholder  |placeholder |placeholder |placeholder
+ |      |eXo Platform 4.2  |eXo Platform 4.3     |eXo Platform 4.4    |Add-ons 
+s|CI Jobs |* jdk |placeholder |placeholder |placeholder
+s|Sonar Jobs |placeholder  |placeholder |placeholder |placeholder
+s|Doc job |placeholder  |placeholder |placeholder |placeholder
+s|Translation |placeholder  |placeholder |placeholder |placeholder
 s|Row 5 |placeholder  |placeholder |placeholder |placeholder
 |===
 
+== Remembered how to create a Jenkins Job?
+todo: add gif
 
-== Me when Engineering asked for a FB
 
+== Me when Developers asked for a FB
 image::exo-jenkins-fb.gif[ask for FB,350,role=crux]
 
 [.credit.light]

@@ -1,40 +1,32 @@
 // A propos moi + eXo + SWF
 [.closing.segue.badge-right]
-== About me
+== About me, eXo, me@eXo
 
 == Maxime Gréau - @mgreau
-* Software Engineer 
+[.columns-2.float-group]
+--
+[.left]
+* *Senior Software Engineer* 
+** @ *eXo* since 2015
+* 2010-2015 - Architect DGFIP
+* Before 
+
 * Book Author
-** Apache Maven 3
-* Speaker
+** *2011*: Apache Maven 3
+* Open Source
 ** Asciidoctor
+* Speaker
+** DevFest, Devoxx, DevNation...
 
-[.closing.segue.badge-right]
-== eXo Platform
-
-
-== Software Factory
-
-* Git (GitHub)
-* Jenkins
-* Sonar
-* Nexus
-* JIRA
-
-== Test 
-
-[.text-center]
+[.left]
+image::mgreau-profile.png[eXo SWF,400,role=reflect]
 --
-[pass,subs=normal]
-I am centered text with a btn:[Button] and [.disabled]#btn:[Disabled]# button.
---
+[horizontal.right]
+https://twitter.com/mgreau[@mgreau]
 
-== Table Option B: Subtitle Placeholder
-[.pivot.spread%autowidth,cols=4]
-|===
-h|Header 1 |placeholder v|placeholder |placeholder
-h|Header 2 |placeholder  |placeholder |placeholder
-h|Header 3 |placeholder  |placeholder |placeholder
-h|Header 4 |placeholder  |placeholder |placeholder
-h|Header 5 |placeholder  |placeholder |placeholder
-|===
+
+== eXo at a glance
+image::exo-at-a-glance.png[eXo at a glance,900,role=crux]
+
+== Software Factory Overview
+image::exo-swf-base.svg[eXo SWF,role=crux]

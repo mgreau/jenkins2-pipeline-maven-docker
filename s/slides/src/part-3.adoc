@@ -1,5 +1,5 @@
 // Part 3: About new Pipeline Jobs
-[.closing.segue.badge-right]
+[.closing.segue.badge-bottom]
 == Pipeline, DSL and Docker to the rescue!
 
 
@@ -36,3 +36,4 @@ DEMO
 
 == Best Practices
 
+== What about local build?
