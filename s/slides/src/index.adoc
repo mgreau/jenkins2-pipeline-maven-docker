@@ -18,13 +18,18 @@ include::part-2.adoc[]
 // Part 3: eXo Platform Project and Maven Jobs
 include::part-3.adoc[]
 
-[.closing]
-== <Thank You!!>
+[.closing.segue.badge-right]
+== <Thank You!>
+
+* http://mgreau.com/jenkins2-pipeline-maven-docker/[Slides online]
+** Slides in *AsciiDoc*, feel free to https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/s/slides/src[send a PR] ;)
+* https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i[Demo files]
+** Dockerfiles & docker-compose.yml for *Jenkins and Sonar*
 
 [horizontal.contact]
-twitter:: @mgreau
-blog:: http://mgreau.com/blog
-github:: github.com/mgreau
+twitter: https://twitter.com/mgreau[@mgreau] -
+github: https://github.com/mgreau[@mgreau] - 
+http://mgreau.com/post[mgreau.com]
 
 [.inverse.subject]
 == !
