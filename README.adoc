@@ -25,4 +25,10 @@ $ open http://localhost:8000
 .Create a network
 ----
 $ docker network create --driver bridge swf
+
+# Run Sonar
+$ docker-compose -f i/sonar/docker-compose.yml
+
+# Run Jenkins
+$ docker-compose -f i/jenkins2/docker-compose.yml
 ----
