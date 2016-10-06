@@ -4,14 +4,63 @@
 image:jenkins-logo.png[jenkins,150]
 image:docker-logo.png[docker,230]
 
-== Docker CI Image
 
-* Create your own CI Docker Image 
+[.inverse.subject]
+== 1- Create your own CI Docker Images
 
-== Problems
 
-* Jenkinsfile not secure?
-* not yet
+== Build stacks
+
+[.columns-2.float-group]
+--
+[.left]
+image::exo-ci-dockerhub.png[eXo Dckerhub Components,500]
+
+[.left]
+* What we need?
+** Git
+** Maven
+* *eXo CI Images*
+** *exoplatform/ci:jdk6-maven30*
+** exoplatform/ci:jdk7-maven30
+** exoplatform/ci:jdk7-maven32
+** exoplatform/ci:jdk8-maven30
+** exoplatform/ci:jdk8-maven32
+** puppet
+
+--
+
+[horizontal.contact]
+https://github.com/exo-docker/exo-ci
+
+[.compact]
+== What to know about Docker Images for Jenkins?
+* entrypoint
+
+[source,shell]
+----
+include::listings/dockerfiles/exo-ci.dockerfile[lines=70..73]
+----
+
+* docker-entrypoint.sh
+
+[source,shell]
+----
+include::listings/dockerfiles/docker-entrypoint.sh[lines=4..9]
+----
+
+[.inverse.subject]
+== 2- Use Jenkins Pipeline plugin
+
+[.columns-2.float-group]
+--
+[.left]
+* DSL plugins
+
+[.left]
+* Pipeline plugins
+--
+// TODO add images side/side
 
 
 == Plugins to use
@@ -28,10 +77,12 @@ include::listings/groovy-libs/exoSonar.groovy[lines=20..30]
 ----
 
 
+[.inverse.subject]
+== DEMO
+Use Pipeline for Sonar
 
 [.inverse.subject]
-== !
-DEMO
+== 3- Generate your Pipeline jobs with DSL jobs
 
 
 == Best Practices
@@ -39,4 +90,4 @@ DEMO
 == What about local build?
 
 
-== Resume
+== To sum up
