@@ -1,5 +1,10 @@
 = transcript
 
+== TODOs
+* Part 1
+** slide1: add jenkins and docker logo
+**
+
 == Steps
 
 * Create a video about creating a job Maven now

@@ -21,9 +21,9 @@ include::part-3.adoc[]
 [.closing.segue.badge-right]
 == <Thank You!>
 
-* http://mgreau.com/jenkins2-pipeline-maven-docker/[Slides online]
+* http://mgreau.com/jenkins2-pipeline-maven-docker/[*Slides online*]
 ** Slides in *AsciiDoc*, feel free to https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/s/slides/src[send a PR] ;)
-* https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i[Demo files]
+* https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i[*Demo files*]
 ** Dockerfiles & docker-compose.yml for *Jenkins and Sonar*
 
 [horizontal.contact]
@@ -33,7 +33,7 @@ http://mgreau.com/post[mgreau.com]
 
 [.inverse.subject]
 == !
-image::google-developers-logo-inverse.svg[Google Developers,422,96,role=logo crux]
+image::exo.png[Google Developers,role=logo crux]
 
 // sides examples
-include::backup.adoc[]
+//include::backup.adoc[]

@@ -3,39 +3,64 @@
 [.closing.segue.badge-right]
 == What we have to build?
 
-== Platform Components
-
-* More than 15 components to build PLF
-* Lots of Add-ons
-
-== Git Workflow
+== Platform Components & Add-ons
 [.columns-2.compact.float-group]
 --
 [.left]
-image::exo-git-workflow.png[eXo SWF,500,role=reflect]
+image::exo-plf-components.png[eXo PLF Components,600]
+
+[.left]
+* More than *20 components* to build
+** Platform projects
+** GateIn projects
+** Juzu projects
+* Lots of Add-ons
+** 15+ supported Add-ons
+** *100+* community Add-ons
+--
+[NOTE] 
+1 component = 1 *mutli-module* Maven project
+
+== Git Workflow
+[.columns-2.float-group]
+--
+[.left]
+image::exo-git-workflow.png[eXo git workflow,500,role=reflect]
 
 [.left]
 * *develop*
-* stable
-* doc
-
+* *stable*: 
+** stable/1.x stable/4.3.x stable/4.2.x
+* *feature*
+** feature/<feature-name>
+* *fix*
+** fix/<issue-id>
+* *integration*
+* ...
 --
-[horizontal.right]
+[horizontal.contact]
 http://developer.exoplatform.org
 
-== Kind of jobs
+== Several Job types
 
-* CI jobs (develop, stable, features branches)
+* CI jobs *(<project>-<branch>-ci)*
+** for all major branches (develop, stable, features)
+** for some important fix
 * Sonar jobs
+** for all develop branches
 * Maven Site jobs
+** for all Platform project
 * Translation jobs
 
 == Version and Clients
 
-* Since 2003, severals versions
-* Clients with differents stacks
-* Java 6/7/8
-* Maven 3.0 / 3.2 
+* Since 2003, several versions
+** eXo Platform 3.x (3.0 / 3.5)
+** eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)
+* Each version has its stack (run & build)
+** Java 6/7/8
+** Maven 3.0 / 3.2 
+* Clients with several infrastructure
 
 == Matrix
 
@@ -49,13 +74,17 @@ s|Translation |placeholder  |placeholder |placeholder |placeholder
 s|Row 5 |placeholder  |placeholder |placeholder |placeholder
 |===
 
-== Remembered how to create a Jenkins Job?
+== Remembered how to create a Maven Jenkins Job?
 todo: add gif
 
 
-== Me when Developers asked for a FB
-image::exo-jenkins-fb.gif[ask for FB,350,role=crux]
+== Me when I had to use the Jenkins UI
+image::jenkins-clic-hell.gif[jenkins UI,350,role=crux]
 
-[.credit.light]
-unsplash.com/photos/PKVcQXEcfLU
+[.inverse]
+== !
+[quote.tada,Quentin Adam,Clever Cloud]
+You become to feel like a toaster.
+image:toaster.gif[toaster,450,role= reflect]
+
 
