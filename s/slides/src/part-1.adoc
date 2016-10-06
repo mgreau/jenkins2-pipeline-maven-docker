@@ -9,24 +9,40 @@
 * *Senior Software Engineer* 
 ** @ *eXo* since 2015
 * 2010-2015 - Architect DGFIP
-* Before 
+* Before 2010 - Software Developer 
 
 * Book Author
 ** *2011*: Apache Maven 3
 * Open Source
 ** Asciidoctor
 * Speaker
-** DevFest, Devoxx, DevNation...
+** Devoxx, DevNation, DevFest, JUG...
 
 [.left]
-image::mgreau-profile.png[eXo SWF,400,role=reflect]
+image::mgreau-profile.png[@mgreau profile,300,role=reflect]
 --
-[horizontal.right]
-https://twitter.com/mgreau[@mgreau]
+[horizontal.contact]
+* https://twitter.com/mgreau[@mgreau] +
+* http://mgreau.com/posts[mgreau.com/blog]
 
 
 == eXo at a glance
 image::exo-at-a-glance.png[eXo at a glance,900,role=crux]
+
+== What is eXo Platform?
+[.columns-2.float-group]
+--
+[.left]
+* Open Source
+** https://github.com/exoplatform[eXo Platform - GitHub]
+** https://github.com/exo-addons[eXo Add-ons - GitHub]
+* Enterprise class
+* Digital Collaboration
+* Platform
+
+[.left]
+image::exo-platform.png[eXo Platform,500,role=reflect]
+--
 
 == Software Factory Overview
 image::exo-swf-base.svg[eXo SWF,role=crux]

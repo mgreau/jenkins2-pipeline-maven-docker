@@ -1,4 +1,4 @@
-= Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2
+= [REX] Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2
 Maxime Gréau
 :organization: eXo Platform
 :position: Senior Sofwtare Engineer
