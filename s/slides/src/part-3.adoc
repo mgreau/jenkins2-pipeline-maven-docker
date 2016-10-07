@@ -7,26 +7,24 @@ image:docker-logo.png[docker,230]
 
 [.inverse.subject]
 == 1- Create your own CI Docker Images
-
+image::exo-ci-dockerhub.png[eXo Dockerhub Components,650,role=crux logo]
 
 == Build stacks
-
 [.columns-2.float-group]
 --
 [.left]
-image::exo-ci-dockerhub.png[eXo Dckerhub Components,500]
+image::exo-docker-github-ci.png[eXo Docker GitHub,530]
 
 [.left]
 * What we need?
 ** Git
 ** Maven
 * *eXo CI Images*
-** *exoplatform/ci:jdk6-maven30*
+** exoplatform/ci:jdk6-maven30
 ** exoplatform/ci:jdk7-maven30
 ** exoplatform/ci:jdk7-maven32
 ** exoplatform/ci:jdk8-maven30
 ** exoplatform/ci:jdk8-maven32
-** puppet
 
 --
 
@@ -34,9 +32,20 @@ image::exo-ci-dockerhub.png[eXo Dckerhub Components,500]
 https://github.com/exo-docker/exo-ci
 
 [.compact]
-== What to know about Docker Images for Jenkins?
-* entrypoint
+==  Docker Image for Jenkins: entrypoint and cat command
+* Example Jenkins job running docker container 
 
+[source,BEFORE]
+----
+$ docker run ... -e ******** exoplatform/ci:jdk7-maven32 cat
+----
+[source,NOW]
+----
+$ docker run ... -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32
+----
+
+FIXED?
+https://issues.jenkins-ci.org/browse/JENKINS-33149
 [source,shell]
 ----
 include::listings/dockerfiles/exo-ci.dockerfile[lines=70..73]
@@ -49,45 +58,153 @@ include::listings/dockerfiles/exo-ci.dockerfile[lines=70..73]
 include::listings/dockerfiles/docker-entrypoint.sh[lines=4..9]
 ----
 
+== Docker Image for Jenkins: the user
+* Create the same user in the image and in the server
+
+[source,shell]
+----
+include::listings/dockerfiles/exo-ci.dockerfile[lines=24..25]
+----
+
+* Jenkins starting a container
+
+[source,shell]
+----
+$ docker run -t -d -u 13000:13000 
+... -v m2-cache-PLF-4.2.x-ecms-4.2.x-ci:/home/ciagent/.m2/repository 
+...  -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32
+----
+
+==  Docker Image for Jenkins: Define the locale
+[source,shell]
+----
+include::listings/dockerfiles/exo-ci.dockerfile[lines=4..8]
+----
+
+
 [.inverse.subject]
-== 2- Use Jenkins Pipeline plugin
+== 2- Use Jenkins Pipeline/Docker plugins
 
-[.columns-2.float-group]
---
-[.left]
-* DSL plugins
-
-[.left]
-* Pipeline plugins
---
-// TODO add images side/side
-
+[source,groovy]
+----
+node('docker'){
+    exoCI{
+        dockerImage = 'exoplatform/ci:jdk8-maven32'
+        gitUrl = 'git@github.com:exodev/platform-ui.git'
+        gitBranch = 'develop'
+    }
+}
+----
 
 == Plugins to use
 
-* Pipeline
-* Docker
-* DSL
+* Pipeline/Docker plugins
+** http://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Pipeline+Plugin[CloudBees Docker Pipeline]
+** https://wiki.jenkins-ci.org/display/JENKINS/Docker+Commons+Plugin[Docker Commons Plugin]
+** https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin[Pipeline]
+** Pipeline-*
+* https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Shared+Groovy+Libraries+Plugin[*Pipeline: Shared Groovy Libraries*]
+* Others useful plugins
+** https://wiki.jenkins-ci.org/display/JENKINS/Config+File+Provider+Plugin[Config File Provider Plugin]
+** https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin[Environment Injector Plugin]
 
-== Groovy libs
+== *Pipeline: Shared Groovy Libraries*
 
+* customize your pipeline
+* manage as a code
 [source,groovy]
 ----
 include::listings/groovy-libs/exoSonar.groovy[lines=20..30]
 ----
 
+http://localhost:8888/job/maven-sandbox-project-ci/pipeline-syntax/globals#exoCI
 
-[.inverse.subject]
-== DEMO
-Use Pipeline for Sonar
+== Notes about Pipeline
+
+* Not all plugins are compatible with pipeline yet
+** example: Maven Plugin (deployed at the end)
+* Be careful with Jenkinsfile and security
+** SOON: _"• load Jenkinsfile only from trusted PRs; readTrusted"_
+* Still verbose syntax
+** SOON: _"Declarative Pipeline in beta"_
+
+See: https://www.cloudbees.com/sites/default/files/2016-jenkins-world-directions_for_pipeline.pdf[Directions for Pipeline] by Jesse Glick at *Jenkins World 2016*
+
+== DEMO: Pipeline Docker for Sonar Analysis
+image::jenkins-pipeline-sonar.png[eXo Pipeline Sonar,500]
+
+
 
 [.inverse.subject]
 == 3- Generate your Pipeline jobs with DSL jobs
 
+[source,groovy]
+----
+include::listings/dsl/sonar-dsl.groovy[lines=59..74]
+----
 
-== Best Practices
+== !
+TODO Schema
 
-== What about local build?
+== DEMO: Generate all pipeline jobs with DSL jobs
+image::demo-dsl.png[DSL,600 ]
 
+== Now how to create a new Job?
+
+[source,shell]
+----
+$ git commit -am "Add new Sonar job"
+$ git push
+----
+image::dsl-commit-sonar.png[DSL Commit,900]
+
+== 5 seed jobs to generate 450+ jobs: then you feel more like...
+image::happy.gif[Jobs DSL Happy,500]
+
+[.inverse.subject]
+== What about local builds?: use Docker4Mac
+image::docker-for-mac.png[Docker4Mac,600 ]
+
+[.compact]
+== Use your CI Images on your laptop
+
+[source,shell]
+----
+include::listings/local-mvn-docker.txt[lines=6..15]
+----
+
+[source,shell]
+----
+$ mvn -v
+Apache Maven 3.2.5 (12a6b3acb947671f09b81f49094c53f426d8cea1; 2014-12-14T17:29:23+00:00)
+Maven home: /usr/share/maven
+Java version: 1.8.0_92, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-1.8.0_92-oracle-x64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "4.4.22-moby", arch: "amd64", family: "unix"
+----
+
+[source,shell]
+----
+$ jdk7mvn30 -v
+Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 13:51:28+0000)
+Maven home: /usr/share/maven
+Java version: 1.7.0_79, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-1.7.0_79-oracle-x64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "4.4.22-moby", arch: "amd64", family: "unix"
+----
 
 == To sum up
+
+* Upgrade to latest Jenkins 1.651.3 then *Jenkins 2 will be easy*
+* Create *your CI Docker images for Jenkins*
+** use the same images on your laptop and the CI
+* *Pipeline as code*
+** create your custom pipeline scripts with *Pipeline: Shared Groovy Libraries*
+* Execute *builds into containers*
+* Generate Pipeline jobs with DSL jobs
+** manage your *DSL scripts as code*
+* Be careful with security & Jenkinsfile
+* Create agent with Docker only
+* Remove executor on master

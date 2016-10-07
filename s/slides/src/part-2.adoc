@@ -21,6 +21,17 @@ image::exo-plf-components.png[eXo PLF Components,600]
 [NOTE] 
 1 component = 1 *multi-module* Maven project
 
+== Platform versions and Clients
+
+* Since 2003, several Platform versions
+** eXo Platform 3.x (3.0 / 3.5)
+** eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)
+* Several versions = multiple stacks (run & build)
+** Java 6 / Java 7 / Java 8...
+** Maven 3.0 / Maven 3.2...
+* Clients don't update their instances each year
+
+
 == Git Workflow
 [.columns-2.float-group]
 --
@@ -41,41 +52,21 @@ image::exo-git-workflow.png[eXo git workflow,500,role=reflect]
 [horizontal.contact]
 http://developer.exoplatform.org
 
-== Several Job types
+== Remembered how to create a Maven Jenkins Job?
+image::jenkins2-maven-job-ui.png[Jenkins Maven Job,900,role=crux]
+[NOTE]
+Yes, this is only ONE job!
 
-* CI jobs *(<project>-<branch>-ci)*
+== Jobs type
+* *450+* CI jobs *(<project>-<branch>-ci)* 
 ** for all major branches (develop, stable, features)
 ** for some important fix
-* Sonar jobs
+* *50+* Sonar jobs *(<project>-<branch>-sonar)*
 ** for all develop branches
-* Maven Site jobs
+* *30+* Maven Site jobs
 ** for all Platform project
 * Translation jobs
-
-== Version and Clients
-
-* Since 2003, several versions
-** eXo Platform 3.x (3.0 / 3.5)
-** eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)
-* Each version has its stack (run & build)
-** Java 6/7/8
-** Maven 3.0 / 3.2 
-* Clients with several infrastructure
-
-== Matrix
-
-[%header%autowidth.spread]
-|===
- |      |eXo Platform 4.2  |eXo Platform 4.3     |eXo Platform 4.4    |Add-ons 
-s|CI Jobs |* jdk |placeholder |placeholder |placeholder
-s|Sonar Jobs |placeholder  |placeholder |placeholder |placeholder
-s|Doc job |placeholder  |placeholder |placeholder |placeholder
-s|Translation |placeholder  |placeholder |placeholder |placeholder
-s|Row 5 |placeholder  |placeholder |placeholder |placeholder
-|===
-
-== Remembered how to create a Maven Jenkins Job?
-todo: add gif
+* ...
 
 
 == Me when I had to use the Jenkins UI
@@ -84,7 +75,7 @@ image::jenkins-clic-hell.gif[jenkins UI,350,role=crux]
 [.inverse]
 == !
 [quote.tada,Quentin Adam,Clever Cloud]
-You become to feel like a toaster.
+If you start to feel like your are a toaster...AUTOMATE!!
 image:toaster.gif[toaster,450,role= reflect]
 
 

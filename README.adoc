@@ -27,8 +27,13 @@ $ open http://localhost:8000
 $ docker network create --driver bridge swf
 
 # Run Sonar
-$ docker-compose -f i/sonar/docker-compose.yml
+# user: admin
+# pwd: admin
+$ docker-compose -f i/sonar/docker-compose.yml up
 
 # Run Jenkins
-$ docker-compose -f i/jenkins2/docker-compose.yml
+# user: administrator
+# password: password4Admin
+$ docker-compose -f i/jenkins2/docker-compose.yml up
+
 ----

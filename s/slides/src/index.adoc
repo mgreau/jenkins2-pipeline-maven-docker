@@ -33,7 +33,7 @@ http://mgreau.com/post[mgreau.com]
 
 [.inverse.subject]
 == !
-image::exo.png[Google Developers,role=logo crux]
+image::exo.png[eXo,role=logo crux]
 
 // sides examples
 //include::backup.adoc[]
