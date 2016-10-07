@@ -1,3 +1,4 @@
+#!groovy
 def call(body) {
     // evaluate the body block, and collect configuration into the object
     def config = [:]
@@ -68,7 +69,8 @@ def call(body) {
               exoDockerSonarImage.inside("${DOCKER_RUN_PARAMS} -v ${m2Cache}:${M2_REPO_IN_CONTAINER}") {
                 // Execute sonar Analysis
                 echo "Sonar Scanner"
-                sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:${SONAR_PLUGIN_VERSION}:sonar -P${MAVEN_SONAR_PROFILES} -s settings.xml"
+                sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:${SONAR_PLUGIN_VERSION}:sonar 
+                -P${MAVEN_SONAR_PROFILES} -s settings.xml"
               }
             }
         } catch (error) {
@@ -85,7 +87,6 @@ def call(body) {
     stage('Send Notifications'){
       // Send notification to inform about Build status
       mailNotification(env,currentBuild, mailTo)
-
       // Add comment to JIRA
       jiraNotification(env,currentBuild)
     }

@@ -108,13 +108,40 @@ node('docker'){
 ** https://wiki.jenkins-ci.org/display/JENKINS/Config+File+Provider+Plugin[Config File Provider Plugin]
 ** https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin[Environment Injector Plugin]
 
-== *Pipeline: Shared Groovy Libraries*
+[.compact]
+== *Pipeline Shared Groovy Libraries*
 
-* customize your pipeline
-* manage as a code
+[.columns-2.float-group]
+--
+[.left]
+* *Create your Groovy scripts*
+** src/org/exoplatform/swf/ExoSWFCommands.groovy
+** vars/exoCI.groovy
+** vars/exoCI.txt (doc)
+** vars/exoSonar.groovy
+** vars/exoSonar.txt (doc)
+** vars/mailNotification.groovy
+* *Manage as a code*
+** external github repository for now
+
+[.left]
+image::swf-pipeline-libs.png[eXo Pipeline libs,300]
+--
+
+[.compact]
+== *Pipeline Shared Groovy Libraries*
+.vars/exoSonar.groovy
 [source,groovy]
 ----
-include::listings/groovy-libs/exoSonar.groovy[lines=20..30]
+include::listings/groovy-libs/exoSonar.groovy[lines=8..14]
+----
+[source,groovy]
+----
+include::listings/groovy-libs/exoSonar.groovy[lines=64..73]
+----
+[source,groovy]
+----
+include::listings/groovy-libs/exoSonar.groovy[lines=87..92]
 ----
 
 http://localhost:8888/job/maven-sandbox-project-ci/pipeline-syntax/globals#exoCI
@@ -143,8 +170,8 @@ image::jenkins-pipeline-sonar.png[eXo Pipeline Sonar,500]
 include::listings/dsl/sonar-dsl.groovy[lines=59..74]
 ----
 
-== !
-TODO Schema
+== Pipeline, DSL, Shared Groovy libs
+image::exo-swf-dsl-pipeline.svg[role=crux]
 
 == DEMO: Generate all pipeline jobs with DSL jobs
 image::demo-dsl.png[DSL,600 ]
