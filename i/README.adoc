@@ -1,6 +1,9 @@
-= WIP
+= Infrastructure
+
+== Build the Jenkins Docker Image
 
 [source]
 ----
-$ docker-compose up
+$ cd jenkins2/dockerfiles
+$ docker build -t mgreau/jenkins:2.19.2 .
 ----
