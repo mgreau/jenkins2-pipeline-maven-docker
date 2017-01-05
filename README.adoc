@@ -37,3 +37,10 @@ $ docker-compose -f i/sonar/docker-compose.yml up
 $ docker-compose -f i/jenkins2/docker-compose.yml up
 
 ----
+
+Then:
+. Create the exo-ci-maven-settings Maven settings files
+. Create the dockerRunParams environment variable:
+.. dockerRunParams = -u 0:0
+. Configure the agent to be able to access Docker by configuring the agent startup:
+.. Prefix Start Slave Command: source ~/.bash_profile  && 
