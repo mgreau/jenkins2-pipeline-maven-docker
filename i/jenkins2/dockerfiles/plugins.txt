@@ -53,6 +53,7 @@ pipeline-stage-view:2.2
 plain-credentials:1.3
 scm-api:1.3
 script-security:1.24
+ssh-agent:1.13
 ssh-credentials:1.12
 ssh-slaves:1.11
 structs:1.5
