@@ -1,0 +1,9 @@
+= Generating PDF
+
+Execute:
+....
+$ asciidoctor-bespoke -T ../src/templates -a linkcss -a data-uri  -o  - ../src/index.adoc
+$ git clone https://github.com/melix/deck2pdf (follow instructions to build)
+$ deck2pdf --profile=bespoke.properties index.html slides.pdf
+$ open slides.pdf
+....
