@@ -5,7 +5,8 @@ networks:
       name: swf
 services:
   jenkins2:
-    image: mgreau/jenkins:2.19.2
+    # Docker image built from github.com/mgreau/dockerfiles/jenkins2
+    image: mgreau/jenkins2
     container_name: exo-jenkins2
     environment: 
       - JENKINS_OPTS="-Dmail.smtp.starttls.enable='true'"

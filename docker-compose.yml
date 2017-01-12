@@ -1,7 +1,8 @@
 version: "2"
 services:
   slides:
-    build: ./
+    # Docker image built from github.com/mgreau/dockerfiles/asciidoctor-bespoke/exo-ioslides
+    image: mgreau/asciidoctor-bespoke:exo-ioslides
     ports:
       - "8000:8000"
       - "35729"

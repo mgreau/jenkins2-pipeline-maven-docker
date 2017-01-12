@@ -1,9 +1,0 @@
-= Infrastructure
-
-== Build the Jenkins Docker Image
-
-[source]
-----
-$ cd jenkins2/dockerfiles
-$ docker build -t mgreau/jenkins:2.19.2 .
-----
