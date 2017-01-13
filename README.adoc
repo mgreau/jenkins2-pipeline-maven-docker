@@ -6,16 +6,19 @@ This repository contains all resources about this talk:
 * +docs+: public files, slides HTML (assets, html...)
 * +demo+: docker compose files to run the demo
 
-== How to work on slides?
+== How to work on slides with livereload feature?
 
-
+. Start the container
++
 [source]
-.Work on slides with livereload feature
 ----
 $ docker-compose up -d
 $ open http://localhost:8000
 ----
-
++
+. Edit slides (`.adoc` files) in `slides/src/`
+. Save
+. Refresh your browser and enjoy ;)
 
 == Run the SWF Demo
 
