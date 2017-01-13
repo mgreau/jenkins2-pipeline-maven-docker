@@ -1,5 +1,5 @@
 'use strict';
-var pkg = require('./package.json'),
+var pkg = require('../package.json'),
   autoprefixer = require('gulp-autoprefixer'),
   browserify = require('browserify'),
   buffer = require('vinyl-buffer'),
