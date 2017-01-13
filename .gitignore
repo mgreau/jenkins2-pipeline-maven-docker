@@ -1,8 +1,8 @@
 # Custom files 
 s/slides/dist
 slides/dist
-
-
+demo/jenkins2/data
+demo/sonar/data
 
 
 ### OSX ###

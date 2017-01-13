@@ -15,7 +15,7 @@ services:
       - "50001:50000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /Users/mgreau/PBR/talks/DevopsDDay2016/swf/jenkins:/var/jenkins_home
-      - /Users/mgreau/.ssh/id_rsa.pub:/usr/share/jenkins/ref/.ssh/authorized_keys:rw
+      - ./data:/var/jenkins_home
+      - ~/.ssh/id_rsa.pub:/usr/share/jenkins/ref/.ssh/authorized_keys:rw
     privileged: true
     #restart: always  
