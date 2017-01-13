@@ -38,6 +38,7 @@ $ open http://localhost:8888
 ----
 
 Then:
+
 . Create the exo-ci-maven-settings Maven settings files
 . Create the dockerRunParams environment variable:
 .. dockerRunParams = -u 0:0
