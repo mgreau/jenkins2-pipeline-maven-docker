@@ -1,5 +1,7 @@
 = Talk about Jenkins 2 Pipeline with Docker for Maven CI
 :toc:
+:toclevels: 4
+:images: ./
 ifdef::env-github[]
 :status:
 :outfilesuffix: .adoc
@@ -53,31 +55,13 @@ $ open http://localhost:8888
 
 ----
 
-=== Configure Jenkins for Docker/Maven
+=== Configure the Jenkins instance
 
-==== Maven Settings file
+A lot of configuration is loaded by default in the `mgreau/jenkins` Docker image, but some configuration have to be done once Jenkins is started.
 
-. Create a Maven configuration file (settings.xml) with the ID *`exo-ci-maven-settings`*
-.. Go to http://localhost:8888/configfiles/selectProvider
-.. [x] Maven Settings
-.. ID: *exo-ci-maven-settings*
-+
-image::./demo/images/jenkins-setup-maven.png[]
-+
-.. Then Add your Maven XML config file (or let the default config)
-+
-image::./demo/images/jenkins-setup-maven-config-xml.png[]
-+
+==== Create an Agent (ci-agent))
 
-
-==== Docker configuration
-
-. Create the `dockerRunParams` environment variable:
-.. Got to http://localhost:8888/configure
-.. [ ] `Environment variables`
-... Name: *`dockerRunParams`*
-... Value: *`-u 0:0`*
-. Configure the agent to be able to access the Docker daemon by configuring the agent startup
+. Configure the agent so that it can access the Docker daemon, by configuring the agent startup
 .. Go to  http://localhost:8888/computer/new to *create a new agent*
 ... Name:: `ci-agent`
 ... Description:: `Agent used to execute Build in Docker containers`
@@ -90,11 +74,73 @@ You can set an absolute path.
 ----
 +
 ... Labels:: `*ci-docker*`
-[IMPORTANT]
-Required to execute Docker build on this node
 ... Launch method:: `Launch slave agents on Unix machines via SSH`
 .... Host:: `Your IP (no 127.0.0.1 neither localhost)`
 .... Credentials:: *Add new credentials with your username/pwd*
 .... Advanced >  Prefix Start Slave Command:: `source ~/.bash_profile  &&`
 [IMPORTANT]
 Required so that Jenkins can load your PATH to be able to access the docker binary
+
+=== Configure a Gmail SMTP
+
+In order to receive builds status by email, you need to configure, got to http://localhost:8888/configure#section20[Extended E-mail Notification Configuration]
+
+[horizontal]
+SMTP server:: smtp.gmail.com
+Use SMTP Authentication:: YES
+User Name:: YOUR EMAIL
+Password:: Email Account Password (or app password if you have 2 key auth)
+Use SSL:: YES
+SMTP Port:: 465
+Charset:: UTF-8
+
+[TIP]
+----
+If you don't do it, the pipeline will failed at the last step, but other steps will be ok.
+----
+
+=== Execute the default Pipeline/Maven/Docker build
+
+By default, a Jenkns Pipeline job is created at http://localhost:8888/job/javaee7-websocket-master-ci/
+
+It will build a Maven Java EE 7 project in a `exoplatform/ci:jdk8-maven32` Docker container.
+
+=== Advanced configuration
+
+==== Maven Settings file
+
+If you want to customize the Maven Settings file included in each container:
+
+. Update the Maven configuration file (settings.xml with ID *`exo-ci-maven-settings`*)
+.. Go to http://localhost:8888/configfiles/editConfig?id=exo-ci-maven-settings
+.. Update the Maven XML config file with your configuration
++
+image::./demo/images/jenkins-setup-maven-config-xml.png[]
++
+
+
+==== Create your first Pipeline Docker job
+
+. Create a new job
+.. Name::
+.. Type:: pipeline
+. Submit
+. Configure
+.. Pipeline script
+[source,groovy]
+----
+@Library('github.com/mgreau/exo-pipeline-library@master') // <1>
+import exoCI // <2>
+
+node('ci-docker'){
+
+    exoCI{
+        gitUrl = 'https://github.com/mgreau/javaee7-websocket.git'
+        gitBranch = 'master'
+        dockerImage = 'exoplatform/ci:jdk8-maven32'
+        mavenGoals = 'clean package'
+    }
+}
+----
+<1> This library is initialized in the default `mgreau/jenkins2` Docker image, so this line is not mandatory
+<2> The functions are automatically loaded in the default `mgreau/jenkins2` Docker image,  so this line is not mandatory
