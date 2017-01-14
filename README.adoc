@@ -94,16 +94,23 @@ Use SSL:: YES
 SMTP Port:: 465
 Charset:: UTF-8
 
-[TIP]
-----
+[NOTE]
+====
 If you don't do it, the pipeline will failed at the last step, but other steps will be ok.
-----
+====
 
 === Execute the default Pipeline/Maven/Docker build
 
 By default, a Jenkns Pipeline job is created at http://localhost:8888/job/javaee7-websocket-master-ci/
 
-It will build a Maven Java EE 7 project in a `exoplatform/ci:jdk8-maven32` Docker container.
+It will build a Maven Java EE 7 project in a `exoplatform/ci:jdk8-maven32` Docker container.+
+
+[IMPORTANT]
+====
+The first time you execute this job, it will failed for security reason.
+You just have to http://localhost:8888/scriptApproval[Approve the Pipeline Script]
+Then you can re-execute the pipeline.
+====
 
 === Advanced configuration
 
