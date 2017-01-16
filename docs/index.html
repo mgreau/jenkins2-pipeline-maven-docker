@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>[REX] Migrez efficacement vos Jobs CI Maven en Pipeline Docker avec Jenkins 2</title>
 <meta name="author" content="Maxime Gréau">
-<meta name="generator" content="Asciidoctor 1.5.4 (Bespoke.js converter)">
+<meta name="generator" content="Asciidoctor 1.5.5 (Bespoke.js converter)">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="build/build.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
@@ -72,6 +72,7 @@
 <li><span class="primary">Enterprise class</span></li>
 <li><span class="primary">Digital Collaboration</span></li>
 <li><span class="primary">Platform</span></li>
+<li><span class="primary"><span class="image reflect"><img src="images/exo-mobile-android.png" alt="eXo Platform" width="140"></span> <span class="image reflect"><img src="images/exo-mobile-ios.jpg" alt="eXo Platform" width="150"></span></span></li>
 </ul>
 <figure class="image reflect"><img src="images/exo-platform.png" alt="eXo Platform" width="500"></figure>
 </div>
@@ -101,6 +102,12 @@
 <li><span class="primary"><strong>100+</strong> community Add-ons</span></li>
 </ul>
 </li>
+<li><span class="primary"><strong>Native Mobile</strong> projects</span>
+<ul>
+<li><span class="primary">Android Application</span></li>
+<li><span class="primary">iOS Application</span></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="admonitionblock note">
@@ -115,21 +122,32 @@
 </div>
 </section>
 <section>
+<h2>eXo Component Example - Social Maven Project</h2>
+<figure class="image crux"><img src="images/exo-idea-social.png" alt="eXo Social" width="880"></figure>
+</section>
+<section>
 <h2>Platform versions and Clients</h2>
-<ul>
+<ul class="build build-items fade">
 <li><span class="primary">Since 2003, several Platform versions</span>
 <ul>
 <li><span class="primary">eXo Platform 3.x (3.0 / 3.5)</span></li>
 <li><span class="primary">eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)</span></li>
+<li><span class="primary">eXo Platform 5.x</span></li>
 </ul>
 </li>
 <li><span class="primary">Several versions = multiple stacks (run &amp; build)</span>
 <ul>
 <li><span class="primary">Java 6 / Java 7 / Java 8&#8230;&#8203;</span></li>
-<li><span class="primary">Maven 3.0 / Maven 3.2&#8230;&#8203;</span></li>
+<li><span class="primary">Maven 3.0 / Maven 3.2 / Maven 3.3</span></li>
 </ul>
 </li>
-<li><span class="primary">Clients don&#8217;t update their instances each year</span></li>
+<li><span class="primary">Native Mobile Applications</span>
+<ul>
+<li><span class="primary">Android / Gradle 2.14</span></li>
+<li><span class="primary">iOS / XCode 7.3</span></li>
+</ul>
+</li>
+<li><span class="primary">Clients <strong>don&#8217;t update</strong> their instances each year</span></li>
 </ul>
 </section>
 <section>
@@ -160,20 +178,6 @@
 <p class="contact"><a href="http://developer.exoplatform.org" class="bare">http://developer.exoplatform.org</a></p>
 </section>
 <section>
-<h2>Remembered how to create a Maven Jenkins Job?</h2>
-<figure class="image crux"><img src="images/jenkins2-maven-job-ui.png" alt="Jenkins Maven Job" width="900"></figure>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">Yes, this is only ONE job!</td>
-</tr>
-</table>
-</div>
-</section>
-<section>
 <h2>Jobs type</h2>
 <ul>
 <li><span class="primary"><strong>450+</strong> CI jobs <strong>(&lt;project&gt;-&lt;branch&gt;-ci)</strong></span>
@@ -197,6 +201,20 @@
 </ul>
 </section>
 <section>
+<h2>Remembered how to create a Maven Jenkins Job?</h2>
+<figure class="image crux"><img src="images/jenkins2-maven-job-ui.png" alt="Jenkins Maven Job" width="900"></figure>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Yes, this is only ONE job!</td>
+</tr>
+</table>
+</div>
+</section>
+<section>
 <h2>Me when I had to use the Jenkins UI</h2>
 <figure class="image crux"><img src="images/jenkins-clic-hell.gif" alt="jenkins UI" width="350"></figure>
 </section>
@@ -212,6 +230,14 @@
 <h2>Jenkins DSL and Pipeline jobs with Docker to the rescue!</h2>
 <p><span class="image"><img src="images/jenkins-logo.png" alt="jenkins" width="150"></span> <span class="image"><img src="images/docker-logo.png" alt="docker" width="230"></span></p>
 </section>
+<section>
+<h2>Overview</h2>
+<ul>
+<li><span class="primary">1- Create your own <strong>CI Docker Images</strong></span></li>
+<li><span class="primary">2- Use <strong>Jenkins Pipeline</strong> &amp; <strong>Pipeline Docker</strong> plugins</span></li>
+<li><span class="primary">3- <strong>Generate</strong> all your Pipeline jobs <strong>with DSL jobs</strong></span></li>
+</ul>
+</section>
 <section class="inverse subject">
 <h2>1- Create your own CI Docker Images</h2>
 <figure class="image crux logo"><img src="images/exo-ci-dockerhub.png" alt="eXo Dockerhub Components" width="650"></figure>
@@ -224,7 +250,7 @@
 <li><span class="primary">What we need?</span>
 <ul>
 <li><span class="primary">Git</span></li>
-<li><span class="primary">Maven</span></li>
+<li><span class="primary">Maven / Gradle / Android SDK</span></li>
 </ul>
 </li>
 <li><span class="primary"><strong>eXo CI Images</strong></span>
@@ -234,26 +260,65 @@
 <li><span class="primary">exoplatform/ci:jdk7-maven32</span></li>
 <li><span class="primary">exoplatform/ci:jdk8-maven30</span></li>
 <li><span class="primary">exoplatform/ci:jdk8-maven32</span></li>
+<li><span class="primary">exoplatform/ci:jdk8-maven33</span></li>
+<li><span class="primary">exoplatform/ci:jdk8-gradle2</span></li>
+<li><span class="primary">exoplatform/ci:gradle2-android</span></li>
 </ul>
 </li>
 </ul>
 </div>
 <p class="contact"><a href="https://github.com/exo-docker/exo-ci" class="bare">https://github.com/exo-docker/exo-ci</a></p>
 </section>
+<section>
+<header>
+<h2>Docker Image for Jenkins (1/4)</h2>
+<h3>Define the locale</h3>
+</header>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Set the locale
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8</code></pre>
+</section>
+<section>
+<header>
+<h2>Docker Image for Jenkins (2/4)</h2>
+<h3>Configure the user</h3>
+</header>
+<ul>
+<li><span class="primary">Create the same user in the image and in the server</span></li>
+</ul>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># eXo CI User
+ARG EXO_CI_USER_UID=13000
+ENV EXO_CI_USER ciagent
+ENV EXO_GROUP ciagent
+...
+# Create user and group with specific ids
+RUN useradd --create-home --user-group -u ${EXO_CI_USER_UID} --shell /bin/bash ${EXO_CI_USER}</code></pre>
+
+<ul>
+<li><span class="primary">Because Jenkins starts containers like this (in eXo context):</span></li>
+</ul>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ docker run -t -d -u 13000:13000
+-v m2-cache-ecms-develop-ci:/home/ciagent/.m2/repository
+-v /srv/ciagent/workspace/ecms-develop-ci:/srv/ciagent/workspace/ecms-develop-ci:rw
+-v /srv/ciagent/workspace/ecms-develop-ci@tmp:/srv/ciagent/workspace/ecms-develop-ci@tmp:rw
+...  -e ******** --entrypoint cat exoplatform/ci:jdk8-maven32</code></pre>
+</section>
 <section class="compact">
 <header>
-<h2>Docker Image for Jenkins</h2>
+<h2>Docker Image for Jenkins (3/4)</h2>
 <h3>entrypoint and cat command</h3>
 </header>
 <ul>
 <li><span class="primary">Example Jenkins job running docker container</span></li>
 </ul>
-<pre class="source"><code data-lang="BEFORE" class="language-BEFORE prettyprint">$ docker run ... -e ******** exoplatform/ci:jdk7-maven32 cat</code></pre>
+<pre class="source"><code data-lang="JENKINS - BEFORE" class="language-JENKINS - BEFORE prettyprint">$ docker run ... -e ******** exoplatform/ci:jdk8-maven32 cat</code></pre>
 
-<pre class="source"><code data-lang="NOW" class="language-NOW prettyprint">$ docker run ... -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32</code></pre>
+<pre class="source"><code data-lang="JENKINS - NOW" class="language-JENKINS - NOW prettyprint">$ docker run ... -e ******** --entrypoint cat exoplatform/ci:jdk8-maven32</code></pre>
 
-<p>FIXED? <a href="https://issues.jenkins-ci.org/browse/JENKINS-33149" class="bare">https://issues.jenkins-ci.org/browse/JENKINS-33149</a></p>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Workaround to be able to execute others command than "mvn" as entrypoint
+<pre class="source"><code data-lang="Dockerfile" class="language-Dockerfile prettyprint">COPY docker-entrypoint.sh /usr/bin/docker-entrypoint
+# Workaround to be able to execute others command than "mvn" as entrypoint
 ENTRYPOINT ["/usr/bin/docker-entrypoint"]
 
 CMD ["mvn", "--help"]</code></pre>
@@ -268,44 +333,18 @@ fi
 
 exec mvn "$@"</code></pre>
 </section>
-<section>
-<header>
-<h2>Docker Image for Jenkins</h2>
-<h3>the user</h3>
-</header>
-<ul>
-<li><span class="primary">Create the same user in the image and in the server</span></li>
-</ul>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Create user and group with specific ids
-RUN useradd --create-home --user-group -u 13000 --shell /bin/bash ${EXO_CI_USER}</code></pre>
-
-<ul>
-<li><span class="primary">Jenkins starting a container</span></li>
-</ul>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ docker run -t -d -u 13000:13000
-... -v m2-cache-PLF-4.2.x-ecms-4.2.x-ci:/home/ciagent/.m2/repository
-...  -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32</code></pre>
-</section>
-<section>
-<header>
-<h2>Docker Image for Jenkins</h2>
-<h3>Define the locale</h3>
-</header>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint"># Set the locale
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8</code></pre>
+<section class="compact">
+<h2>Docker Image for Jenkins (4/4)</h2>
+<figure class="image crux"><img src="images/exo-swf-dockerfiles.png" alt="eXo Dockerfiles" width="750"></figure>
 </section>
 <section class="inverse subject">
-<h2>2- Use Jenkins Pipeline/Docker plugins</h2>
-<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">node('docker'){
-    exoCI{
-        dockerImage = 'exoplatform/ci:jdk8-maven32'
-        gitUrl = 'git@github.com:exodev/platform-ui.git'
-        gitBranch = 'develop'
-    }
-}</code></pre>
+<h2>2- Use Jenkins Pipeline &amp; Docker plugins</h2>
+<figure class="quote tada">
+<blockquote>
+<p>Pipelines are a series of steps that allow you to orchestrate the work required to build, test and deploy applications.</p>
+</blockquote>
+<figcaption>Jenkins Wiki <cite>CloudBees</cite></figcaption>
+</figure>
 </section>
 <section>
 <h2>Plugins to use</h2>
@@ -326,6 +365,32 @@ ENV LC_ALL en_US.UTF-8</code></pre>
 </ul>
 </li>
 </ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">Take a look at my Jenkins2 Dockerfile/plugins.txt samples <a href="https://github.com/mgreau/dockerfiles/tree/master/jenkins2" class="bare">https://github.com/mgreau/dockerfiles/tree/master/jenkins2</a></td>
+</tr>
+</table>
+</div>
+</section>
+<section>
+<header>
+<h2>eXo Pipeline example</h2>
+<h3>Maven CI job in Docker</h3>
+</header>
+<figure class="listing">
+<figcaption>Jenkins Job Pipeline</figcaption>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">node('ci-docker'){
+    exoCI{
+        dockerImage = 'exoplatform/ci:jdk8-maven32'
+        gitUrl = 'git@github.com:exodev/platform-ui.git'
+        gitBranch = 'develop'
+    }
+}</code></pre>
+</figure>
 </section>
 <section class="compact">
 <h2><strong>Pipeline Shared Groovy Libraries</strong></h2>
@@ -351,61 +416,103 @@ ENV LC_ALL en_US.UTF-8</code></pre>
 </div>
 </section>
 <section class="compact">
+<header>
 <h2><strong>Pipeline Shared Groovy Libraries</strong></h2>
+<h3>vars/exoCI.groovy (1/3)</h3>
+</header>
 <figure class="listing">
-<figcaption>vars/exoSonar.groovy</figcaption>
+<figcaption>init</figcaption>
 <pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    def exoSWF = new org.exoplatform.swf.ExoSWFCommands()
     def utils = new org.exoplatform.swf.Utils()
 
     //init values
     def M2_REPO_IN_CONTAINER = utils.getValue('m2RepositoryPath', '/home/ciagent/.m2/repository', config, env)
-    def JOB_SUFFIX = utils.getValue('jobSuffix', 'sonar', config, env)</code></pre>
+    def DOCKER_IMAGE = utils.getValue('dockerImage', '', config, env)</code></pre>
 </figure>
-<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">              eXoJDKMaven.inside("${DOCKER_RUN_PARAMS} -v ${m2Cache}:${M2_REPO_IN_CONTAINER}") {
-                // Build project
-                echo "Maven Build"
-                sh "mvn ${MAVEN_SONAR_GOALS} -P${MAVEN_SONAR_PROFILES} -s settings.xml"
-              }
-              exoDockerSonarImage.inside("${DOCKER_RUN_PARAMS} -v ${m2Cache}:${M2_REPO_IN_CONTAINER}") {
-                // Execute sonar Analysis
-                echo "Sonar Scanner"
-                sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:${SONAR_PLUGIN_VERSION}:sonar
-                -P${MAVEN_SONAR_PROFILES} -s settings.xml"</code></pre>
+<figure class="listing">
+<figcaption>Stage Pull Docker Image</figcaption>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    def eXoJDKMaven = docker.image(DOCKER_IMAGE);
+    def pipelineError = null
 
+    stage(DOCKER_IMAGE){
+      eXoJDKMaven.pull()
+    }</code></pre>
+</figure>
+<figure class="listing">
+<figcaption>Stage Checkout SCM via Git</figcaption>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    stage('Checkout ' + GIT_BRANCH){
+      // checkout scm with credentials
+      git branch: GIT_BRANCH, credentialsId: GIT_CREDENTIALS_ID, url: GIT_URL
+    }</code></pre>
+</figure>
+</section>
+<section class="compact">
+<header>
+<h2><strong>Pipeline Shared Groovy Libraries</strong></h2>
+<h3>vars/exoCI.groovy (2/3)</h3>
+</header>
+<figure class="listing">
+<figcaption>Stage Maven Build</figcaption>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    stage('Build'){
+      // Create m2 cache (use docker volume)
+      def m2Cache = exoSWF.createMavenCacheVolume(JOB_NAME)
+      // Use custom settings.xml file on project workspace directory
+      configFileProvider(
+                  [configFile(fileId: "${MAVEN_SETTINGS_FILE_ID}",  targetLocation: 'settings.xml')]) {
+        try {
+          eXoJDKMaven.inside("${DOCKER_RUN_PARAMS} -v ${m2Cache}:${M2_REPO_IN_CONTAINER}") {
+            sh "mvn ${MAVEN_GOALS} -P${MAVEN_PROFILES} -DdeployAtEnd=${DEPLOY_AT_END} -s settings.xml"
+          }
+        } catch (error) {
+          currentBuild.result = 'FAILURE'
+          pipelineError = error
+        } finally {
+          // Delete temporary settings file
+          sh 'rm -f settings.xml'
+        }
+      }
+    }</code></pre>
+</figure>
+</section>
+<section class="compact">
+<header>
+<h2><strong>Pipeline Shared Groovy Libraries</strong></h2>
+<h3>vars/exoCI.groovy (3/3)</h3>
+</header>
+<figure class="listing">
+<figcaption>Stage Publish Reports</figcaption>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    stage('Publish Reports'){
+      junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+    }</code></pre>
+</figure>
+<figure class="listing">
+<figcaption>Stage Send Notifications</figcaption>
 <pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">    stage('Send Notifications'){
+
       // Send notification to inform about Build status
       mailNotification(env,currentBuild, mailTo)
       // Add comment to JIRA
       jiraNotification(env,currentBuild)
-    }</code></pre>
 
-<p><a href="http://localhost:8888/job/maven-sandbox-project-ci/pipeline-syntax/globals#exoCI" class="bare">http://localhost:8888/job/maven-sandbox-project-ci/pipeline-syntax/globals#exoCI</a></p>
-</section>
-<section>
-<h2>Notes about Pipeline</h2>
-<ul>
-<li><span class="primary">Not all plugins are compatible with pipeline yet</span>
-<ul>
-<li><span class="primary">example: Maven Plugin (deployed at the end)</span></li>
-</ul>
-</li>
-<li><span class="primary">Be careful with Jenkinsfile and security</span>
-<ul>
-<li><span class="primary">SOON: <em>"• load Jenkinsfile only from trusted PRs; readTrusted"</em></span></li>
-</ul>
-</li>
-<li><span class="primary">Still verbose syntax</span>
-<ul>
-<li><span class="primary">SOON: <em>"Declarative Pipeline in beta"</em></span></li>
-</ul>
-</li>
-</ul>
-<p>See: <a href="https://www.cloudbees.com/sites/default/files/2016-jenkins-world-directions_for_pipeline.pdf">Directions for Pipeline</a> by Jesse Glick at <strong>Jenkins World 2016</strong></p>
+      // Clean up the workspace at the end (except in failure, and unstable cases)
+      step([$class: 'WsCleanup', cleanWhenSuccess: true, cleanWhenFailure: false, cleanWhenUnstable: false])
+    }</code></pre>
+</figure>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">See: <a href="https://www.cloudbees.com/sites/default/files/2016-jenkins-world-directions_for_pipeline.pdf">Directions for Pipeline</a> by Jesse Glick at <strong>Jenkins World 2016</strong></td>
+</tr>
+</table>
+</div>
 </section>
 <section>
 <header>
 <h2>DEMO</h2>
-<h3>Pipeline Docker for Sonar Analysis</h3>
+<h3>Pipeline Docker for CI Builds / Gradle-Android Build / Sonar Analysis</h3>
 </header>
 <figure class="image"><img src="images/jenkins-pipeline-sonar.png" alt="eXo Pipeline Sonar" width="500"></figure>
 </section>
@@ -440,39 +547,81 @@ node('docker'){
 <figure class="image"><img src="images/demo-dsl.png" alt="DSL" width="600"></figure>
 </section>
 <section>
-<h2>Now how to create a new Job?</h2>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ git commit -am "Add new Sonar job"
+<h2>Now how to create new Jobs?</h2>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ git commit -am "Create CI/Sonar jobs..."
 $ git push</code></pre>
 
-<figure class="image"><img src="images/dsl-commit-sonar.png" alt="DSL Commit" width="900"></figure>
+<figure class="image"><img src="images/exo-ci-sonar-dsl-jobs.png" alt="DSL Commit" width="650"></figure>
 </section>
 <section>
 <header>
-<h2>5 seed jobs to generate 450+ jobs</h2>
+<h2>7 seed jobs to generate 350+ jobs</h2>
 <h3>then you feel more like&#8230;&#8203;</h3>
 </header>
 <figure class="image"><img src="images/happy.gif" alt="Jobs DSL Happy" width="500"></figure>
 </section>
+<section>
+<h2>Notes about Pipeline</h2>
+<ul>
+<li><span class="primary">Not all plugins are compatible with pipeline yet</span>
+<ul>
+<li><span class="primary">example: Maven Plugin (deployed at the end)</span></li>
+</ul>
+</li>
+<li><span class="primary">Be careful with Jenkinsfile</span></li>
+<li><span class="primary">Still verbose syntax</span>
+<ul>
+<li><span class="primary">IN BETA: <em>"Declarative Pipeline in beta"</em></span></li>
+</ul>
+</li>
+</ul>
+<pre class="source"><code data-lang="groovy" class="language-groovy prettyprint">postBuild {
+  always {
+    sh 'echo "This will always run"'
+  }
+  success {
+    sh 'echo "This will run only if successful"'
+  }
+...
+}</code></pre>
+</section>
 <section class="inverse subject">
 <header>
 <h2>What about local builds?</h2>
-<h3>use Docker4Mac</h3>
+<h3>use Docker for Mac /Docker for Windows</h3>
 </header>
 <figure class="image"><img src="images/docker-for-mac.png" alt="Docker4Mac" width="600"></figure>
 </section>
 <section class="compact">
+<header>
 <h2>Use your CI Images on your laptop</h2>
-<pre class="source"><code data-lang="shell" class="language-shell prettyprint">function jdk7mvn30(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk7-maven30 $*
+<h3>.bash_profile</h3>
+</header>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint">mvn(){
+      mvnInContainer "exoplatform/ci:jdk8-maven32" "$@"
 }
+jdk7mvn30(){
+      mvnInContainer "exoplatform/ci:jdk7-maven30" "$@"
+}
+# Run Maven commands in a container
+mvnInContainer(){
+      local dockerImage=$1
 
-
-function mvn(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk8-maven32 $*
+      docker run --rm \
+        -v $(pwd):/srv/ciagent/workspace \
+        -v ~/.gnupg/gpg.conf:/home/ciagent/.gnupg/gpg.conf:ro \
+        -v ~/.gnupg/pubring.gpg:/home/ciagent/.gnupg/pubring.gpg:ro \
+        -v ~/.gnupg/secring.gpg:/home/ciagent/.gnupg/secring.gpg:ro \
+        -v ~/.gnupg/trustdb.gpg:/home/ciagent/.gnupg/trustdb.gpg:ro \
+        -v ~/.gnupg:/home/ciagent/.gnupg \
+        -v ~/.m2/repository:/home/ciagent/.m2/repository \
+        -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml \
+        --workdir /srv/ciagent/workspace \
+        ${dockerImage} "${@:2}"
 }</code></pre>
-
+</section>
+<section class="compact">
+<h2>Use your CI Images on your laptop</h2>
 <pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ mvn -v
 Apache Maven 3.2.5 (12a6b3acb947671f09b81f49094c53f426d8cea1; 2014-12-14T17:29:23+00:00)
 Maven home: /usr/share/maven
@@ -519,12 +668,14 @@ OS name: "linux", version: "4.4.22-moby", arch: "amd64", family: "unix"</code></
 <ul>
 <li><span class="primary"><a href="http://mgreau.com/jenkins2-pipeline-maven-docker/"><strong>Slides online</strong></a></span>
 <ul>
-<li><span class="primary">Slides in <strong>AsciiDoc</strong>, feel free to <a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/s/slides/src">send a PR</a> ;)</span></li>
+<li><span class="primary">Slides in <strong>AsciiDoc</strong>, feel free to <a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/slides/src">send a PR</a> ;)</span></li>
 </ul>
 </li>
-<li><span class="primary"><a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i"><strong>Demo files</strong></a></span>
+<li><span class="primary"><strong>Demo files</strong></span>
 <ul>
-<li><span class="primary">Dockerfiles &amp; docker-compose.yml for <strong>Jenkins and Sonar</strong></span></li>
+<li><span class="primary"><a href="https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/demo">docker-compose.yml for <strong>Jenkins and Sonar</strong></a></span></li>
+<li><span class="primary"><a href="https://github.com/mgreau/dockerfiles/tree/master/jenkins2">mgreau/jenkins2 Dockerfile</a></span></li>
+<li><span class="primary"><a href="https://github.com/mgreau/exo-pipeline-library/tree/master/">exo-pipeline-library samples</a></span></li>
 </ul>
 </li>
 </ul>
