@@ -637,6 +637,10 @@ Java version: 1.7.0_79, vendor: Oracle Corporation
 Java home: /usr/lib/jvm/java-1.7.0_79-oracle-x64/jre
 Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "4.4.22-moby", arch: "amd64", family: "unix"</code></pre>
+
+<p>Tip: Rebuild the image locally with your user ID if necessary</p>
+<pre class="source"><code data-lang="shell" class="language-shell prettyprint">$ docker build --build-arg EXO_CI_USER_UID="1100" \
+ -t exoplatform/ci:base https://github.com/exo-docker/exo-ci.git#master:base</code></pre>
 </section>
 <section>
 <h2>To sum up</h2>
