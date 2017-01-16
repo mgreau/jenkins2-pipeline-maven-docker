@@ -22,9 +22,12 @@ include::part-3.adoc[]
 == <Thank You!>
 
 * http://mgreau.com/jenkins2-pipeline-maven-docker/[*Slides online*]
-** Slides in *AsciiDoc*, feel free to https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/s/slides/src[send a PR] ;)
-* https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/i[*Demo files*]
-** Dockerfiles & docker-compose.yml for *Jenkins and Sonar*
+** Slides in *AsciiDoc*, feel free to https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/slides/src[send a PR] ;)
+* *Demo files*
+** https://github.com/mgreau/jenkins2-pipeline-maven-docker/tree/master/demo[docker-compose.yml for *Jenkins and Sonar*]
+** https://github.com/mgreau/dockerfiles/tree/master/jenkins2[mgreau/jenkins2 Dockerfile]
+** https://github.com/mgreau/exo-pipeline-library/tree/master/[exo-pipeline-library samples]
+
 
 [horizontal.contact]
 twitter: https://twitter.com/mgreau[@mgreau] -

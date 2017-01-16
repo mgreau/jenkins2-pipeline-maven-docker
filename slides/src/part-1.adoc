@@ -39,9 +39,12 @@ image::exo-at-a-glance.png[eXo at a glance,900,role=crux]
 * Enterprise class
 * Digital Collaboration
 * Platform
+*  image:exo-mobile-android.png[eXo Platform,140,role=reflect] image:exo-mobile-ios.jpg[eXo Platform,150,role=reflect]
+
 
 [.left]
 image::exo-platform.png[eXo Platform,500,role=reflect]
+
 --
 
 == Software Factory Overview

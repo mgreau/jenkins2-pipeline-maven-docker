@@ -17,19 +17,30 @@ image::exo-plf-components.png[eXo PLF Components,600]
 * Lots of Add-ons
 ** 15+ supported Add-ons
 ** *100+* community Add-ons
+* *Native Mobile* projects
+** Android Application
+** iOS Application
 --
 [NOTE] 
 1 component = 1 *multi-module* Maven project
 
+== eXo Component Example - Social Maven Project
+image::exo-idea-social.png[eXo Social,880,role=crux]
+
 == Platform versions and Clients
 
+[%build.fade]
 * Since 2003, several Platform versions
 ** eXo Platform 3.x (3.0 / 3.5)
 ** eXo Platform 4.x (4.0, 4.1, 4.2, 4.3, 4.4)
+** eXo Platform 5.x
 * Several versions = multiple stacks (run & build)
 ** Java 6 / Java 7 / Java 8...
-** Maven 3.0 / Maven 3.2...
-* Clients don't update their instances each year
+** Maven 3.0 / Maven 3.2 / Maven 3.3
+* Native Mobile Applications
+** Android / Gradle 2.14 
+** iOS / XCode 7.3
+* Clients *don't update* their instances each year
 
 
 == Git Workflow
@@ -52,10 +63,6 @@ image::exo-git-workflow.png[eXo git workflow,500,role=reflect]
 [horizontal.contact]
 http://developer.exoplatform.org
 
-== Remembered how to create a Maven Jenkins Job?
-image::jenkins2-maven-job-ui.png[Jenkins Maven Job,900,role=crux]
-[NOTE]
-Yes, this is only ONE job!
 
 == Jobs type
 * *450+* CI jobs *(<project>-<branch>-ci)* 
@@ -68,6 +75,10 @@ Yes, this is only ONE job!
 * Translation jobs
 * ...
 
+== Remembered how to create a Maven Jenkins Job?
+image::jenkins2-maven-job-ui.png[Jenkins Maven Job,900,role=crux]
+[NOTE]
+Yes, this is only ONE job!
 
 == Me when I had to use the Jenkins UI
 image::jenkins-clic-hell.gif[jenkins UI,350,role=crux]

@@ -5,6 +5,13 @@ image:jenkins-logo.png[jenkins,150]
 image:docker-logo.png[docker,230]
 
 
+== Overview
+
+* 1- Create your own *CI Docker Images*
+* 2- Use *Jenkins Pipeline* & *Pipeline Docker* plugins
+* 3- *Generate* all your Pipeline jobs *with DSL jobs* 
+
+
 [.inverse.subject]
 == 1- Create your own CI Docker Images
 image::exo-ci-dockerhub.png[eXo Dockerhub Components,650,role=crux logo]
@@ -18,37 +25,67 @@ image::exo-docker-github-ci.png[eXo Docker GitHub,530]
 [.left]
 * What we need?
 ** Git
-** Maven
+** Maven / Gradle / Android SDK
 * *eXo CI Images*
 ** exoplatform/ci:jdk6-maven30
 ** exoplatform/ci:jdk7-maven30
 ** exoplatform/ci:jdk7-maven32
 ** exoplatform/ci:jdk8-maven30
 ** exoplatform/ci:jdk8-maven32
+** exoplatform/ci:jdk8-maven33
+** exoplatform/ci:jdk8-gradle2
+** exoplatform/ci:gradle2-android
 
 --
 
 [horizontal.contact]
 https://github.com/exo-docker/exo-ci
 
-[.compact]
-==  Docker Image for Jenkins: entrypoint and cat command
-* Example Jenkins job running docker container 
-
-[source,BEFORE]
-----
-$ docker run ... -e ******** exoplatform/ci:jdk7-maven32 cat
-----
-[source,NOW]
-----
-$ docker run ... -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32
-----
-
-FIXED?
-https://issues.jenkins-ci.org/browse/JENKINS-33149
+==  Docker Image for Jenkins (1/4): Define the locale
 [source,shell]
 ----
-include::listings/dockerfiles/exo-ci.dockerfile[lines=70..73]
+include::listings/dockerfiles/exo-ci.dockerfile[lines=4..8]
+----
+
+
+== Docker Image for Jenkins (2/4): Configure the user
+* Create the same user in the image and in the server
+
+[source,shell]
+----
+include::listings/dockerfiles/exo-ci.dockerfile[lines=10..13]
+...
+include::listings/dockerfiles/exo-ci.dockerfile[lines=25..26]
+----
+
+* Because Jenkins starts containers like this (in eXo context):
+
+[source,shell]
+----
+$ docker run -t -d -u 13000:13000 
+-v m2-cache-ecms-develop-ci:/home/ciagent/.m2/repository 
+-v /srv/ciagent/workspace/ecms-develop-ci:/srv/ciagent/workspace/ecms-develop-ci:rw 
+-v /srv/ciagent/workspace/ecms-develop-ci@tmp:/srv/ciagent/workspace/ecms-develop-ci@tmp:rw
+...  -e ******** --entrypoint cat exoplatform/ci:jdk8-maven32
+----
+
+[.compact]
+==  Docker Image for Jenkins (3/4): entrypoint and cat command
+* Example Jenkins job running docker container 
+
+[source,JENKINS - BEFORE]
+----
+$ docker run ... -e ******** exoplatform/ci:jdk8-maven32 cat
+----
+[source,JENKINS - NOW]
+----
+$ docker run ... -e ******** --entrypoint cat exoplatform/ci:jdk8-maven32
+----
+
+[source,Dockerfile]
+----
+include::listings/dockerfiles/exo-ci.dockerfile[lines=51]
+include::listings/dockerfiles/exo-ci.dockerfile[lines=71..74]
 ----
 
 * docker-entrypoint.sh
@@ -58,43 +95,17 @@ include::listings/dockerfiles/exo-ci.dockerfile[lines=70..73]
 include::listings/dockerfiles/docker-entrypoint.sh[lines=4..9]
 ----
 
-== Docker Image for Jenkins: the user
-* Create the same user in the image and in the server
+[.compact]
+==  Docker Image for Jenkins (4/4)
+image::exo-swf-dockerfiles.png[eXo Dockerfiles,750,role=crux]
 
-[source,shell]
-----
-include::listings/dockerfiles/exo-ci.dockerfile[lines=24..25]
-----
-
-* Jenkins starting a container
-
-[source,shell]
-----
-$ docker run -t -d -u 13000:13000 
-... -v m2-cache-PLF-4.2.x-ecms-4.2.x-ci:/home/ciagent/.m2/repository 
-...  -e ******** --entrypoint cat exoplatform/ci:jdk7-maven32
-----
-
-==  Docker Image for Jenkins: Define the locale
-[source,shell]
-----
-include::listings/dockerfiles/exo-ci.dockerfile[lines=4..8]
-----
 
 
 [.inverse.subject]
-== 2- Use Jenkins Pipeline/Docker plugins
+== 2- Use Jenkins Pipeline & Docker plugins
 
-[source,groovy]
-----
-node('docker'){
-    exoCI{
-        dockerImage = 'exoplatform/ci:jdk8-maven32'
-        gitUrl = 'git@github.com:exodev/platform-ui.git'
-        gitBranch = 'develop'
-    }
-}
-----
+[quote.tada,Jenkins Wiki,CloudBees]
+Pipelines are a series of steps that allow you to orchestrate the work required to build, test and deploy applications. 
 
 == Plugins to use
 
@@ -107,6 +118,24 @@ node('docker'){
 * Others useful plugins
 ** https://wiki.jenkins-ci.org/display/JENKINS/Config+File+Provider+Plugin[Config File Provider Plugin]
 ** https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin[Environment Injector Plugin]
+
+[NOTE]
+Take a look at my Jenkins2 Dockerfile/plugins.txt samples https://github.com/mgreau/dockerfiles/tree/master/jenkins2
+
+
+== eXo Pipeline example: Maven CI job in Docker
+
+.Jenkins Job Pipeline
+[source,groovy]
+----
+node('ci-docker'){
+    exoCI{
+        dockerImage = 'exoplatform/ci:jdk8-maven32'
+        gitUrl = 'git@github.com:exodev/platform-ui.git'
+        gitBranch = 'develop'
+    }
+}
+----
 
 [.compact]
 == *Pipeline Shared Groovy Libraries*
@@ -129,35 +158,54 @@ image::swf-pipeline-libs.png[eXo Pipeline libs,300]
 --
 
 [.compact]
-== *Pipeline Shared Groovy Libraries*
-.vars/exoSonar.groovy
+== *Pipeline Shared Groovy Libraries*: vars/exoCI.groovy (1/3)
+.init
 [source,groovy]
 ----
-include::listings/groovy-libs/exoSonar.groovy[lines=8..14]
+include::listings/groovy-libs/exoCI.groovy[lines=11..16]
 ----
+
+.Stage Pull Docker Image
 [source,groovy]
 ----
-include::listings/groovy-libs/exoSonar.groovy[lines=64..73]
+include::listings/groovy-libs/exoCI.groovy[lines=35..40]
 ----
+
+.Stage Checkout SCM via Git
 [source,groovy]
 ----
-include::listings/groovy-libs/exoSonar.groovy[lines=87..92]
+include::listings/groovy-libs/exoCI.groovy[lines=42..45]
 ----
 
-http://localhost:8888/job/maven-sandbox-project-ci/pipeline-syntax/globals#exoCI
+[.compact]
+== *Pipeline Shared Groovy Libraries*: vars/exoCI.groovy (2/3)
 
-== Notes about Pipeline
+.Stage Maven Build
+[source,groovy]
+----
+include::listings/groovy-libs/exoCI.groovy[lines=47..65]
+----
 
-* Not all plugins are compatible with pipeline yet
-** example: Maven Plugin (deployed at the end)
-* Be careful with Jenkinsfile and security
-** SOON: _"• load Jenkinsfile only from trusted PRs; readTrusted"_
-* Still verbose syntax
-** SOON: _"Declarative Pipeline in beta"_
+[.compact]
+== *Pipeline Shared Groovy Libraries*: vars/exoCI.groovy (3/3)
 
+.Stage Publish Reports
+[source,groovy]
+----
+include::listings/groovy-libs/exoCI.groovy[lines=66..68]
+----
+
+.Stage Send Notifications
+[source,groovy]
+----
+include::listings/groovy-libs/exoCI.groovy[lines=70..79]
+----
+
+
+[NOTE]
 See: https://www.cloudbees.com/sites/default/files/2016-jenkins-world-directions_for_pipeline.pdf[Directions for Pipeline] by Jesse Glick at *Jenkins World 2016*
 
-== DEMO: Pipeline Docker for Sonar Analysis
+== DEMO: Pipeline Docker for CI Builds / Gradle-Android Build / Sonar Analysis
 image::jenkins-pipeline-sonar.png[eXo Pipeline Sonar,500]
 
 
@@ -176,29 +224,55 @@ image::exo-swf-dsl-pipeline.svg[role=crux]
 == DEMO: Generate all pipeline jobs with DSL jobs
 image::demo-dsl.png[DSL,600 ]
 
-== Now how to create a new Job?
+== Now how to create new Jobs?
 
 [source,shell]
 ----
-$ git commit -am "Add new Sonar job"
+$ git commit -am "Create CI/Sonar jobs..."
 $ git push
 ----
-image::dsl-commit-sonar.png[DSL Commit,900]
+image::exo-ci-sonar-dsl-jobs.png[DSL Commit,650]
 
-== 5 seed jobs to generate 450+ jobs: then you feel more like...
+== 7 seed jobs to generate 350+ jobs: then you feel more like...
 image::happy.gif[Jobs DSL Happy,500]
 
+== Notes about Pipeline
+
+* Not all plugins are compatible with pipeline yet
+** example: Maven Plugin (deployed at the end)
+* Be careful with Jenkinsfile
+* Still verbose syntax
+** IN BETA: _"Declarative Pipeline in beta"_
+
+[source,groovy]
+----
+postBuild {
+  always {
+    sh 'echo "This will always run"'
+  }
+  success {
+    sh 'echo "This will run only if successful"'
+  }
+...
+}
+----
+
 [.inverse.subject]
-== What about local builds?: use Docker4Mac
+== What about local builds?: use Docker for Mac /Docker for Windows
 image::docker-for-mac.png[Docker4Mac,600 ]
 
 [.compact]
-== Use your CI Images on your laptop
+== Use your CI Images on your laptop: .bash_profile
 
 [source,shell]
 ----
-include::listings/local-mvn-docker.txt[lines=6..15]
+include::listings/local-mvn-docker.txt[lines=4..6]
+include::listings/local-mvn-docker.txt[lines=16..18]
+include::listings/local-mvn-docker.txt[lines=24..39]
 ----
+
+[.compact]
+== Use your CI Images on your laptop
 
 [source,shell]
 ----

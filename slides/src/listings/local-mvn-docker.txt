@@ -1,20 +1,39 @@
-function jdk7mvn32(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository 
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk7-maven32 $*
+#!/bin/bash
+# Run Maven commands in Containers
+
+mvn(){
+      mvnInContainer "exoplatform/ci:jdk8-maven32" "$@"
 }
 
-function jdk7mvn30(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository 
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk7-maven30 $*
+jdk8mvn30(){
+      mvnInContainer "exoplatform/ci:jdk8-maven30" "$@"
 }
 
-
-function mvn(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository 
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk8-maven32 $*
+jdk7mvn32(){
+      mvnInContainer "exoplatform/ci:jdk7-maven32" "$@"
 }
 
-function jdk8mvn30(){
-      docker run --rm -v $(pwd):/srv/ciagent/workspace -v ~/.m2/repository:/home/ciagent/.m2/repository 
-      -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml exoplatform/ci:jdk8-maven30 $*
+jdk7mvn30(){
+      mvnInContainer "exoplatform/ci:jdk7-maven30" "$@"
+}
+
+jdk6mvn30(){
+      mvnInContainer "exoplatform/ci:jdk6-maven30" "$@"
+}
+
+# Run Maven commands in a container
+mvnInContainer(){
+      local dockerImage=$1
+
+      docker run --rm \
+        -v $(pwd):/srv/ciagent/workspace \
+        -v ~/.gnupg/gpg.conf:/home/ciagent/.gnupg/gpg.conf:ro \
+        -v ~/.gnupg/pubring.gpg:/home/ciagent/.gnupg/pubring.gpg:ro \
+        -v ~/.gnupg/secring.gpg:/home/ciagent/.gnupg/secring.gpg:ro \
+        -v ~/.gnupg/trustdb.gpg:/home/ciagent/.gnupg/trustdb.gpg:ro \
+        -v ~/.gnupg:/home/ciagent/.gnupg \
+        -v ~/.m2/repository:/home/ciagent/.m2/repository \
+        -v ~/.m2/settings.xml:/home/ciagent/.m2/settings.xml \
+        --workdir /srv/ciagent/workspace \
+        ${dockerImage} "${@:2}"
 }
