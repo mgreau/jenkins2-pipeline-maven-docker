@@ -151,3 +151,11 @@ node('ci-docker'){
 ----
 <1> This library is initialized in the default `mgreau/jenkins2` Docker image, so this line is not mandatory
 <2> The functions are automatically loaded in the default `mgreau/jenkins2` Docker image,  so this line is not mandatory
+
+
+== Misc commands
+
+[source, shell]
+----
+$ docker image ls --filter=reference='mgreau/ci'
+----
