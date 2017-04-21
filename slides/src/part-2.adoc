@@ -7,7 +7,7 @@
 [.columns-2.compact.float-group]
 --
 [.left]
-image::exo-plf-components.png[eXo PLF Components,600]
+image::exo-plf-components.png[eXo PLF Components,550]
 
 [.left]
 * More than *20 components* to build
@@ -67,7 +67,7 @@ http://developer.exoplatform.org
 == Jobs type
 * *450+* CI jobs *(<project>-<branch>-ci)* 
 ** for all major branches (develop, stable, features)
-** for some important fix
+** for some important fix (PR)
 * *50+* Sonar jobs *(<project>-<branch>-sonar)*
 ** for all develop branches
 * *30+* Maven Site jobs

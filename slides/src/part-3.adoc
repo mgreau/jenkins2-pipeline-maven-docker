@@ -11,6 +11,7 @@ image:docker-logo.png[docker,230]
 * 2- Use *Jenkins Pipeline* & *Pipeline Docker* plugins
 * 3- *Generate* all your Pipeline jobs *with DSL jobs* 
 
+image::exo-swf-dsl-pipeline.svg[overview,800]
 
 [.inverse.subject]
 == 1- Create your own CI Docker Images
@@ -168,13 +169,13 @@ include::listings/groovy-libs/exoCI.groovy[lines=11..16]
 .Stage Pull Docker Image
 [source,groovy]
 ----
-include::listings/groovy-libs/exoCI.groovy[lines=35..40]
+include::listings/groovy-libs/exoCI.groovy[lines=35..41]
 ----
 
 .Stage Checkout SCM via Git
 [source,groovy]
 ----
-include::listings/groovy-libs/exoCI.groovy[lines=42..45]
+include::listings/groovy-libs/exoCI.groovy[lines=42..46]
 ----
 
 [.compact]
@@ -183,7 +184,7 @@ include::listings/groovy-libs/exoCI.groovy[lines=42..45]
 .Stage Maven Build
 [source,groovy]
 ----
-include::listings/groovy-libs/exoCI.groovy[lines=47..65]
+include::listings/groovy-libs/exoCI.groovy[lines=47..68]
 ----
 
 [.compact]
@@ -192,15 +193,14 @@ include::listings/groovy-libs/exoCI.groovy[lines=47..65]
 .Stage Publish Reports
 [source,groovy]
 ----
-include::listings/groovy-libs/exoCI.groovy[lines=66..68]
+include::listings/groovy-libs/exoCI.groovy[lines=68..70]
 ----
 
 .Stage Send Notifications
 [source,groovy]
 ----
-include::listings/groovy-libs/exoCI.groovy[lines=70..79]
+include::listings/groovy-libs/exoCI.groovy[lines=72..81]
 ----
-
 
 [NOTE]
 See: https://www.cloudbees.com/sites/default/files/2016-jenkins-world-directions_for_pipeline.pdf[Directions for Pipeline] by Jesse Glick at *Jenkins World 2016*
@@ -233,6 +233,17 @@ $ git push
 ----
 image::exo-ci-sonar-dsl-jobs.png[DSL Commit,650]
 
+== Developers can create/update jobs easily: PRs for the WIN
+
+[.columns-2.float-group]
+--
+[.left]
+image:exo-pr-pipeline.png[eXo Platform,500] 
+
+[.left]
+image:exo-pr-pipeline-diff.png[eXo Platform,500]
+--
+
 == 7 seed jobs to generate 350+ jobs: then you feel more like...
 image::happy.gif[Jobs DSL Happy,500]
 
@@ -242,7 +253,8 @@ image::happy.gif[Jobs DSL Happy,500]
 ** example: Maven Plugin (deployed at the end)
 * Be careful with Jenkinsfile
 * Still verbose syntax
-** IN BETA: _"Declarative Pipeline in beta"_
+** Since February 2017: _"Declarative Pipeline Syntax 1.0 is now available "_
+*** https://jenkins.io/blog/2017/02/03/declarative-pipeline-ga/
 
 [source,groovy]
 ----
@@ -314,5 +326,5 @@ $ docker build --build-arg EXO_CI_USER_UID="1100" \
 * Generate Pipeline jobs with DSL jobs
 ** manage your *DSL scripts as code*
 * Be careful with security & Jenkinsfile
-* Create agent with Docker only
+* Create Jenkins agent with just Docker installed
 * Remove executor on master
