@@ -29,3 +29,16 @@ services:
       - /Users/mgreau/SWF/gogs:/data
     networks:
       - swf
+  mail:
+    image: mailhog/mailhog
+    container_name: smtp
+    environment:
+      MH_HOSTNAME: localhost
+      MH_SMTP_BIND_ADDR: 0.0.0.0:1025
+      MH_API_BIND_ADDR: 0.0.0.0:8025
+      MH_UI_BIND_ADDR: 0.0.0.0:8025
+      #MH_UI_WEB_PATH: mail
+    ports: 
+      - "8025:8025"
+    networks:
+      - swf
