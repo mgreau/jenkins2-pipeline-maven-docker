@@ -81,23 +81,27 @@ You can set an absolute path.
 [IMPORTANT]
 Required so that Jenkins can load your PATH to be able to access the docker binary
 
-=== Configure a Gmail SMTP
+=== Configure SMTP server (embedded MailHog)
 
 In order to receive builds status by email, you need to configure, got to http://localhost:8888/configure#section20[Extended E-mail Notification Configuration]
 
 [horizontal]
-SMTP server:: smtp.gmail.com
-Use SMTP Authentication:: YES
-User Name:: YOUR EMAIL
-Password:: Email Account Password (or app password if you have 2 key auth)
-Use SSL:: YES
-SMTP Port:: 465
+SMTP server:: smtp
+SMTP Port:: 1025
 Charset:: UTF-8
 
 [NOTE]
 ====
 If you don't do it, the pipeline will failed at the last step, but other steps will be ok.
 ====
+
+[IMPORTANT]
+====
+For simplicity and to avoid polluting real mailboxes, we use an embedded smtp server called MailHog, 
+which will accept any email to send but won't relay it to any other smtp server.
+All sent email will be viewable at http://localhost:8025/
+====
+
 
 === Execute the default Pipeline/Maven/Docker build
 
